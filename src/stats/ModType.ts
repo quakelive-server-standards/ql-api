@@ -1,0 +1,10 @@
+enum ModType {
+  LAVA = 'LAVA',
+  LIGHTNING = 'LIGHTNING',
+  PLASMA = 'PLASMA',
+  ROCKET = 'ROCKET',
+  ROCKET_SPLASH = 'ROCKET_SPLASH',
+  SWITCHTEAM = 'SWITCHTEAM'
+}
+
+export default ModType
