@@ -1,6 +1,7 @@
 import * as zeromq from 'zeromq'
+import { EventEmitter } from 'events'
 
-export class ZeroMq {
+export class ZeroMq extends EventEmitter {
 
   socketType: SocketType
   socketOptions?: SocketOptions
@@ -8,6 +9,7 @@ export class ZeroMq {
   socket: any
 
   constructor(socketType: SocketType, address: string, socketOptions?: SocketOptions) {
+    super()
     this.socketType = socketType
     this.address = address
     this.socketOptions = socketOptions

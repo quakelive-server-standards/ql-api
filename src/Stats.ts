@@ -47,24 +47,61 @@ export default class Stats extends ZeroMq {
 
       let type = obj.TYPE
       let data = obj.DATA
-      let event: any
 
       switch (type) {
-        case 'MATCH_REPORT': event = MatchReportEvent.fromQl(data); break
-        case 'MATCH_STARTED': event = MatchStartedEvent.fromQl(data); break
-        case 'PLAYER_CONNECT': event = PlayerConnectEvent.fromQl(data); break
-        case 'PLAYER_DEATH': event = PlayerDeathEvent.fromQl(data); break
-        case 'PLAYER_DISCONNECT': event = PlayerDisconnectEvent.fromQl(data); break
-        case 'PLAYER_KILL': event = PlayerKillEvent.fromQl(data); break
-        case 'PLAYER_MEDAL': event = PlayerMedalEvent.fromQl(data); break
-        case 'PLAYER_STATS': event = PlayerStatsEvent.fromQl(data); break
-        case 'PLAYER_SWITCHTEAM': event = PlayerSwitchTeamEvent.fromQl(data); break
-        case 'ROUND_OVER': event = RoundOverEvent.fromQl(data); break
+        case 'MATCH_REPORT': this.emit('MATCH_REPORT', MatchReportEvent.fromQl(data)); break
+        case 'MATCH_STARTED': this.emit('MATCH_STARTED', MatchStartedEvent.fromQl(data)); break
+        case 'PLAYER_CONNECT': this.emit('PLAYER_CONNECT', PlayerConnectEvent.fromQl(data)); break
+        case 'PLAYER_DEATH': this.emit('PLAYER_DEATH', PlayerDeathEvent.fromQl(data)); break
+        case 'PLAYER_DISCONNECT': this.emit('PLAYER_DISCONNECT', PlayerDisconnectEvent.fromQl(data)); break
+        case 'PLAYER_KILL': this.emit('PLAYER_KILL', PlayerKillEvent.fromQl(data)); break
+        case 'PLAYER_MEDAL': this.emit('PLAYER_MEDAL', PlayerMedalEvent.fromQl(data)); break
+        case 'PLAYER_STATS': this.emit('PLAYER_STATS', PlayerStatsEvent.fromQl(data)); break
+        case 'PLAYER_SWITCHTEAM': this.emit('PLAYER_SWITCHTEAM', PlayerSwitchTeamEvent.fromQl(data)); break
+        case 'ROUND_OVER': this.emit('ROUND_OVER', RoundOverEvent.fromQl(data)); break
         default:
           console.error(`Received Quake Live event TYPE '${type}' does not exist or is not supported.`, data)
       }
-
-      console.log(type)
     })
+  }
+
+  onMatchReport(listener: (event: MatchReportEvent) => void) {
+    this.on('MATCH_REPORT', listener)
+  }
+
+  onMatchStarted(listener: (event: MatchStartedEvent) => void) {
+    this.on('MATCH_STARTED', listener)
+  }
+
+  onPlayerConnect(listener: (event: PlayerConnectEvent) => void) {
+    this.on('PLAYER_CONNECT', listener)
+  }
+
+  onPlayerDeath(listener: (event: PlayerDeathEvent) => void) {
+    this.on('PLAYER_DEATH', listener)
+  }
+
+  onPlayerDisconnect(listener: (event: PlayerDisconnectEvent) => void) {
+    this.on('PLAYER_DISCONNECT', listener)
+  }
+
+  onPlayerKill(listener: (event: PlayerKillEvent) => void) {
+    this.on('PLAYER_KILL', listener)
+  }
+
+  onPlayerMedal(listener: (event: PlayerMedalEvent) => void) {
+    this.on('PLAYER_MEDAL', listener)
+  }
+
+  onPlayerStats(listener: (event: PlayerStatsEvent) => void) {
+    this.on('PLAYER_STATS', listener)
+  }
+
+  onPlayerSwitchTeam(listener: (event: PlayerSwitchTeamEvent) => void) {
+    this.on('PLAYER_SWITCHTEAM', listener)
+  }
+  
+  onRoundOver(listener: (event: RoundOverEvent) => void) {
+    this.on('ROUND_OVER', listener)
   }
 }

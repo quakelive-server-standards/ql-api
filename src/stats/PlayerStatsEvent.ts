@@ -14,17 +14,17 @@ export default class PlayerStatsEvent {
     accuracy: number
     assists: number
     captures: number
-    combokill: number
+    comboKill: number
     defends: number
     excellent: number
     firstFrag: number
     headshot: number
     humiliation: number
     impressive: number
-    midair: number
+    midAir: number
     perfect: number
     perforated: number
-    quadgod: number
+    quadGod: number
     rampage: number
     revenge: number
   }
@@ -41,15 +41,15 @@ export default class PlayerStatsEvent {
     guard: number
     haste: number
     health: number
-    invis: number
+    invisibility: number
     invulnerability: number
     kamikaze: number
-    medkit: number
+    medKit: number
     megaHealth: number
     otherHoldable: number
     otherPowerup: number
     portal: number
-    quad: number
+    quadDamage: number
     redArmor: number
     regeneration: number
     scout: number
@@ -236,17 +236,17 @@ export default class PlayerStatsEvent {
       accuracy: data['MEDALS']['ACCURACY'],
       assists: data['MEDALS']['ASSISTS'],
       captures: data['MEDALS']['CAPTURES'],
-      combokill: data['MEDALS']['COMBOKILL'],
+      comboKill: data['MEDALS']['COMBOKILL'],
       defends: data['MEDALS']['DEFENDS'],
       excellent: data['MEDALS']['EXCELLENT'],
       firstFrag: data['MEDALS']['FIRSTFRAG'],
       headshot: data['MEDALS']['HEADSHOT'],
       humiliation: data['MEDALS']['HUMILIATION'],
       impressive: data['MEDALS']['IMPRESSIVE'],
-      midair: data['MEDALS']['MIDAIR'],
+      midAir: data['MEDALS']['MIDAIR'],
       perfect: data['MEDALS']['PERFECT'],
       perforated: data['MEDALS']['PERFORATED'],
-      quadgod: data['MEDALS']['QUADGOD'],
+      quadGod: data['MEDALS']['QUADGOD'],
       rampage: data['MEDALS']['RAMPAGE'],
       revenge: data['MEDALS']['REVENGE']
     }
@@ -262,15 +262,15 @@ export default class PlayerStatsEvent {
       guard: data['PICKUPS']['GUARD'],
       haste: data['PICKUPS']['HASTE'],
       health: data['PICKUPS']['HEALTH'],
-      invis: data['PICKUPS']['INVIS'],
+      invisibility: data['PICKUPS']['INVIS'],
       invulnerability: data['PICKUPS']['INVULNERABILITY'],
       kamikaze: data['PICKUPS']['KAMIKAZE'],
-      medkit: data['PICKUPS']['MEDKIT'],
+      medKit: data['PICKUPS']['MEDKIT'],
       megaHealth: data['PICKUPS']['MEGA_HEALTH'],
       otherHoldable: data['PICKUPS']['OTHER_HOLDABLE'],
       otherPowerup: data['PICKUPS']['OTHER_POWERUP'],
       portal: data['PICKUPS']['PORTAL'],
-      quad: data['PICKUPS']['QUAD'],
+      quadDamage: data['PICKUPS']['QUAD'],
       redArmor: data['PICKUPS']['RED_ARMOR'],
       regeneration: data['PICKUPS']['REGEN'],
       scout: data['PICKUPS']['SCOUT'],

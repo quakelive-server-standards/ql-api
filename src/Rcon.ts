@@ -21,11 +21,5 @@ export default class Rcon extends ZeroMq {
 
     this.onConnectDelayed(() => console.log('Rcon: Retried connecting to ' + this.address))
     this.onConnectRetried(() => console.log('Rcon: Delayed connecting to ' + this.address))
-
-    this.onMessage(message => {
-      if (message.length > 0) {
-        console.log(message.toString())
-      } 
-    })
   }
 }
