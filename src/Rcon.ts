@@ -12,16 +12,15 @@ export default class Rcon extends ZeroMq {
 
     this.onConnected((eventValue, address, error) => {
       if (! error) {
-        console.log('Connected to ' + this.address)
-        this.send('say HI', 0, (a, b, c) => console.log('callback', a, b, c))
+        console.log('Rcon: Connected to ' + this.address)
       }
       else {
-        console.log('There was an error connecting to ' + address + ' -> ' + error)
+        console.log('Rcon: There was an error connecting to ' + address + ' -> ' + error)
       }
     })
 
-    this.onConnectDelayed(() => console.log('Retried connecting to ' + this.address))
-    this.onConnectRetried(() => console.log('Delayed connecting to ' + this.address))
+    this.onConnectDelayed(() => console.log('Rcon: Retried connecting to ' + this.address))
+    this.onConnectRetried(() => console.log('Rcon: Delayed connecting to ' + this.address))
 
     this.onMessage(message => {
       if (message.length > 0) {
