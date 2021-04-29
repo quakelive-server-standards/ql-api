@@ -15,9 +15,8 @@ export default class Stats extends ZeroMq {
 
   events = new EventEmitter
 
-  constructor(address: string, identity: string, password?: string) {
+  constructor(address: string, password?: string) {
     super(SocketType.subscriber, ProtocolType.tcp, address, {
-      identity: identity,
       plain_username: password ? 'stats' : undefined,
       plain_password: password ? password : undefined,
       zap_domain: password ? 'stats' : undefined

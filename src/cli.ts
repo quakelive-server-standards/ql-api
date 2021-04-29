@@ -50,7 +50,7 @@ console.log = function() {
 }
     
 let rcon = new Rcon(address + ':' + rconPort, 'admin', rconPassword)
-let stats = new Stats(address + ':' + statsPort, 'admin', statsPassword)
+let stats = new Stats(address + ':' + statsPort, statsPassword)
 
 rcon.onConnected((eventValue, address, error) => {
   if (! error) {
@@ -58,7 +58,7 @@ rcon.onConnected((eventValue, address, error) => {
     cli.prompt()
   }
   else {
-    console.log('There was an error connecting to rcon API ' + address + ' -> ' + error)
+    console.log('There was an error connecting to rcon API ' + rcon.address + ' -> ' + error)
   }
 })
 
@@ -88,7 +88,7 @@ stats.onConnected((eventValue, address, error) => {
     console.log('Stats connected to ' + stats.address)
   }
   else {
-    console.log('There was an error connecting to stats API ' + address + ' -> ' + error)
+    console.log('There was an error connecting to stats API ' + rcon.address + ' -> ' + error)
   }
 })
 
