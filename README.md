@@ -26,7 +26,7 @@ rcon.connect()
 Connecting to the stats API is as simple as creating an instance of `Stats` and calling `connect()` on it.
 
 ```typescript
-import { Stats } from 'ql-rcon'
+import { Stats } from 'ql-api'
 
 let stats = new Stats('127.0.0.1:27960', 'password')
 stats.connect()
