@@ -24,17 +24,8 @@ export default class Stats extends ZeroMq {
     })
 
     this.onConnected((eventValue, address, error) => {
-      if (! error) {
-        this.subscribe()
-        console.log('Stats connected to ' + this.address)
-      }
-      else {
-        console.log('There was an error connecting to stats API ' + address + ' -> ' + error)
-      }
+      this.subscribe()
     })
-
-    this.onConnectDelayed(() => console.log('Stats: Retried connecting to ' + this.address))
-    this.onConnectRetried(() => console.log('Stats: Delayed connecting to ' + this.address))
 
     this.onMessage(message => {
       let json = message.toString()
@@ -63,7 +54,7 @@ export default class Stats extends ZeroMq {
         case 'PLAYER_SWITCHTEAM': this.events.emit('PLAYER_SWITCHTEAM', PlayerSwitchTeamEvent.fromQl(data)); break
         case 'ROUND_OVER': this.events.emit('ROUND_OVER', RoundOverEvent.fromQl(data)); break
         default:
-          console.error(`Received Quake Live event TYPE '${type}' does not exist or is not supported.`, data)
+          console.error(`Received Quake Live event type '${type}' does not exist or is not supported.`, data)
       }
     })
   }

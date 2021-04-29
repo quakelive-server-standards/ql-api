@@ -11,12 +11,37 @@ import PlayerStatsEvent from './stats/PlayerStatsEvent'
 import PlayerSwitchTeamEvent from './stats/PlayerSwitchTeamEvent'
 import RoundOverEvent from './stats/RoundOverEvent'
 
+let address = '95.216.19.32'
+let rconPort = '28962'
+let rconPassword = 'quakeliveserverstandards'
+let statsPassword = 'quakeliveserverstandards'
+let statsPort = '27962'
+
 let cli = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
-  prompt: '95.216.19.32 '
+  prompt: address + ' '
 })
 
+cli.on('line', (line) => {
+  if (line.length == 0) {
+    return
+  }
+
+  if (line == 'exit') {
+    console.log('Good Game')
+    process.exit()
+  }
+
+  rcon.send(line)
+})
+
+cli.on('close', () => {
+  console.log('Good Game')
+  process.exit(0)
+})
+
+// Adjust console.log to properly handle interplay with the prompt
 let log = console.log
 console.log = function() {
     ;(cli as any).output.write('\x1b[2K\r')
@@ -24,11 +49,21 @@ console.log = function() {
     ;(cli as any)._refreshLine()
 }
     
-let stats = new Stats('95.216.19.32:27962', 'quakeliveserverstandards', 'quakeliveserverstandards')
-let rcon = new Rcon('95.216.19.32:28962', 'quakeliveserverstandards', 'quakeliveserverstandards')
+let rcon = new Rcon(address + ':' + rconPort, 'admin', rconPassword)
+let stats = new Stats(address + ':' + statsPort, 'admin', statsPassword)
 
-rcon.onConnected(() => cli.prompt())
-rcon.onMessage(() => cli.prompt())
+rcon.onConnected((eventValue, address, error) => {
+  if (! error) {
+    console.log('Rcon connected to ' + rcon.address)
+    cli.prompt()
+  }
+  else {
+    console.log('There was an error connecting to rcon API ' + address + ' -> ' + error)
+  }
+})
+
+// rcon.onConnectDelayed(() => console.log('Rcon: Retried connecting to ' + rcon.address))
+// rcon.onConnectRetried(() => console.log('Rcon: Delayed connecting to ' + rcon.address))
 
 rcon.onMessage(message => {
   if (message.length > 0) {
@@ -39,9 +74,26 @@ rcon.onMessage(message => {
       str = str.substring(18, str.length - 4)
     }
 
+    // Remove ^7 characters
+    str = str.replace(new RegExp('\\^7', 'g'), '')
+
     console.log(str)
-  } 
+  }
+
+  cli.prompt()
 })
+
+stats.onConnected((eventValue, address, error) => {
+  if (! error) {
+    console.log('Stats connected to ' + stats.address)
+  }
+  else {
+    console.log('There was an error connecting to stats API ' + address + ' -> ' + error)
+  }
+})
+
+// stats.onConnectDelayed(() => console.log('Stats: Retried connecting to ' + stats.address))
+// stats.onConnectRetried(() => console.log('Stats: Delayed connecting to ' + stats.address))
 
 stats.onMatchReport((event: MatchReportEvent) => {
   console.log(`${now()} Game has finished. Duration = ${event.gameLength} Aborted = ${event.aborted}`)
@@ -57,7 +109,12 @@ stats.onPlayerConnect((event: PlayerConnectEvent) => {
 })
 
 stats.onPlayerDeath((event: PlayerDeathEvent) => {
-  console.log(`${now()} ${event.killer.name} fragged ${event.victim.name} with ${event.killer.weapon}`)
+  if (event.killer) {
+    console.log(`${now()} ${event.killer.name} fragged ${event.victim.name} with ${event.killer.weapon}`)
+  }
+  else {
+    console.log(`${now()} ${event.mod} fragged ${event.victim.name}`)
+  }
 })
 
 stats.onPlayerDisconnect((event: PlayerDisconnectEvent) => {
@@ -82,19 +139,6 @@ stats.onRoundOver((event: RoundOverEvent) => {
 
 stats.connect()
 rcon.connect()
-
-cli.on('line', (line) => {
-  if (line.length == 0) {
-    return
-  }
-
-  rcon.send(line)
-})
-
-cli.on('close', () => {
-  console.log('Bye!')
-  process.exit(0)
-})
 
 function now() {
   let date = new Date

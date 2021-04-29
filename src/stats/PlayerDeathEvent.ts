@@ -87,31 +87,35 @@ export default class PlayerDeathEvent {
     event.time = data['TIME']
     event.warmup = data['WARMUP']
   
-    event.killer = {
-      airborne: data['KILLER']['AIRBORNE'],
-      ammo: data['KILLER']['AMMO'],
-      armor: data['KILLER']['ARMOR'],
-      bot: data['KILLER']['BOT'],
-      botSkill: data['KILLER']['BOT_SKILL'],
-      health: data['KILLER']['HEALTH'],
-      holdable: data['KILLER']['HOLDABLE'],
-      name: data['KILLER']['NAME'],
-      position: {
-        x: data['KILLER']['POSITION']['X'],
-        y: data['KILLER']['POSITION']['Y'],
-        z: data['KILLER']['POSITION']['Z']
-      },
-      powerUps: data['KILLER']['POWERUPS'],
-      speed: data['KILLER']['SPEED'],
-      steamId: data['KILLER']['STEAM_ID'],
-      submerged: data['KILLER']['SUBMERGED'],
-      team: data['KILLER']['TEAM'],
-      view: {
-        x: data['KILLER']['VIEW']['X'],
-        y: data['KILLER']['VIEW']['Y'],
-        z: data['KILLER']['VIEW']['Z']
-      },
-      weapon: data['KILLER']['WEAPON']
+    // if the killer was not another player this property
+    // does not exist
+    if (data['KILLER'] != undefined) {
+      event.killer = {
+        airborne: data['KILLER']['AIRBORNE'],
+        ammo: data['KILLER']['AMMO'],
+        armor: data['KILLER']['ARMOR'],
+        bot: data['KILLER']['BOT'],
+        botSkill: data['KILLER']['BOT_SKILL'],
+        health: data['KILLER']['HEALTH'],
+        holdable: data['KILLER']['HOLDABLE'],
+        name: data['KILLER']['NAME'],
+        position: {
+          x: data['KILLER']['POSITION']['X'],
+          y: data['KILLER']['POSITION']['Y'],
+          z: data['KILLER']['POSITION']['Z']
+        },
+        powerUps: data['KILLER']['POWERUPS'],
+        speed: data['KILLER']['SPEED'],
+        steamId: data['KILLER']['STEAM_ID'],
+        submerged: data['KILLER']['SUBMERGED'],
+        team: data['KILLER']['TEAM'],
+        view: {
+          x: data['KILLER']['VIEW']['X'],
+          y: data['KILLER']['VIEW']['Y'],
+          z: data['KILLER']['VIEW']['Z']
+        },
+        weapon: data['KILLER']['WEAPON']
+      }  
     }
   
     event.victim = {
