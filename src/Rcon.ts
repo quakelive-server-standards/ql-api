@@ -1,9 +1,9 @@
-import { SocketType, ZeroMq } from './zmq'
+import { ProtocolType, SocketType, Zmq } from './zmq'
 
-export default class Rcon extends ZeroMq {
+export default class Rcon extends Zmq {
 
   constructor(address: string, identity: string, password?: string) {
-    super(SocketType.dealer, address, {
+    super(SocketType.dealer, ProtocolType.tcp, address, {
       identity: identity,
       plain_username: password ? 'rcon' : undefined,
       plain_password: password ? password : undefined,
@@ -12,10 +12,10 @@ export default class Rcon extends ZeroMq {
 
     this.onConnected((eventValue, address, error) => {
       if (! error) {
-        console.log('Rcon: Connected to ' + this.address)
+        console.log('Rcon connected to ' + this.address)
       }
       else {
-        console.log('Rcon: There was an error connecting to ' + address + ' -> ' + error)
+        console.log('There was an error connecting to rcon API ' + address + ' -> ' + error)
       }
     })
 

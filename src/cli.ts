@@ -81,7 +81,6 @@ cli.on('line', (line) => {
     return
   }
 
-  console.log('Sending line', line)
   rcon.send(line)
 })
 

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha -r ts-node/register \"test/**/*.test.ts\"",
     "start": "node src/rcon.js",
-    "startTsNode": "ts-node src/test.ts"
+    "cli": "ts-node src/cli.ts"
   },
   "author": "",
   "license": "ISC",
