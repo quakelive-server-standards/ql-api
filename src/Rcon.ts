@@ -1,6 +1,6 @@
-import { ProtocolType, SocketType, Zmq } from './zmq'
+import { ProtocolType, SocketType, ZeroMq } from 'zeromq-ts'
 
-export default class Rcon extends Zmq {
+export default class Rcon extends ZeroMq {
 
   constructor(address: string, identity: string, password?: string) {
     super(SocketType.dealer, ProtocolType.tcp, address, {

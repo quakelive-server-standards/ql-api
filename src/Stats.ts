@@ -9,9 +9,9 @@ import PlayerMedalEvent from './stats/PlayerMedalEvent'
 import PlayerStatsEvent from './stats/PlayerStatsEvent'
 import PlayerSwitchTeamEvent from './stats/PlayerSwitchTeamEvent'
 import RoundOverEvent from './stats/RoundOverEvent'
-import { ProtocolType, SocketType, Zmq } from './zmq'
+import { ProtocolType, SocketType, ZeroMq } from 'zeromq-ts'
 
-export default class Stats extends Zmq {
+export default class Stats extends ZeroMq {
 
   events = new EventEmitter
 

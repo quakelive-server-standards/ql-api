@@ -1,27 +1,27 @@
-import * as readline from 'readline';
-import Rcon from './Rcon';
-import Stats from './Stats';
-import MatchReportEvent from './stats/MatchReportEvent';
-import MatchStartedEvent from './stats/MatchStartedEvent';
-import PlayerConnectEvent from './stats/PlayerConnectEvent';
-import PlayerDeathEvent from './stats/PlayerDeathEvent';
-import PlayerDisconnectEvent from './stats/PlayerDisconnectEvent';
-import PlayerMedalEvent from './stats/PlayerMedalEvent';
-import PlayerStatsEvent from './stats/PlayerStatsEvent';
-import PlayerSwitchTeamEvent from './stats/PlayerSwitchTeamEvent';
-import RoundOverEvent from './stats/RoundOverEvent';
+import * as readline from 'readline'
+import Rcon from './Rcon'
+import Stats from './Stats'
+import MatchReportEvent from './stats/MatchReportEvent'
+import MatchStartedEvent from './stats/MatchStartedEvent'
+import PlayerConnectEvent from './stats/PlayerConnectEvent'
+import PlayerDeathEvent from './stats/PlayerDeathEvent'
+import PlayerDisconnectEvent from './stats/PlayerDisconnectEvent'
+import PlayerMedalEvent from './stats/PlayerMedalEvent'
+import PlayerStatsEvent from './stats/PlayerStatsEvent'
+import PlayerSwitchTeamEvent from './stats/PlayerSwitchTeamEvent'
+import RoundOverEvent from './stats/RoundOverEvent'
 
 let cli = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
   prompt: '95.216.19.32 '
-});
+})
 
-let log = console.log;
+let log = console.log
 console.log = function() {
-    (cli as any).output.write('\x1b[2K\r');
-    log.apply(console, Array.prototype.slice.call(arguments));
-    (cli as any)._refreshLine();
+    ;(cli as any).output.write('\x1b[2K\r')
+    log.apply(console, Array.prototype.slice.call(arguments))
+    ;(cli as any)._refreshLine()
 }
     
 let stats = new Stats('95.216.19.32:27962', 'quakeliveserverstandards', 'quakeliveserverstandards')
@@ -32,7 +32,14 @@ rcon.onMessage(() => cli.prompt())
 
 rcon.onMessage(message => {
   if (message.length > 0) {
-    console.log(message.toString() + '')
+    let str = message.toString()
+    
+    // Clean up messages like: broadcast: print "Vote passed.\n"
+    if (str.startsWith('broadcast: print "')) {
+      str = str.substring(18, str.length - 4)
+    }
+
+    console.log(str)
   } 
 })
 
