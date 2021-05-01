@@ -63,4 +63,4 @@ If a connection was not successful, ZMQ will retry waiting a certain amount of t
 
 ## Credits
 
-Credits go out to PredatH0r which samle data was used: https://github.com/PredatH0r/XonStat/tree/master/feeder/sample-data
+Credits go out to PredatH0r of which repository some sample data was used: https://github.com/PredatH0r/XonStat/tree/master/feeder/sample-data
