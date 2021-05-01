@@ -1,4 +1,5 @@
 import { EventEmitter } from 'events'
+import { ProtocolType, SocketOptions, SocketType, ZeroMq } from 'zeromq-ts'
 import MatchReportEvent from './stats/MatchReportEvent'
 import MatchStartedEvent from './stats/MatchStartedEvent'
 import PlayerConnectEvent from './stats/PlayerConnectEvent'
@@ -9,14 +10,14 @@ import PlayerMedalEvent from './stats/PlayerMedalEvent'
 import PlayerStatsEvent from './stats/PlayerStatsEvent'
 import PlayerSwitchTeamEvent from './stats/PlayerSwitchTeamEvent'
 import RoundOverEvent from './stats/RoundOverEvent'
-import { ProtocolType, SocketType, ZeroMq } from 'zeromq-ts'
 
 export default class Stats extends ZeroMq {
 
   events = new EventEmitter
 
-  constructor(address: string, password?: string) {
+  constructor(address: string, password?: string, options?: SocketOptions) {
     super(SocketType.subscriber, ProtocolType.tcp, address, {
+      ...options,
       plain_username: password ? 'stats' : undefined,
       plain_password: password ? password : undefined,
       zap_domain: password ? 'stats' : undefined
