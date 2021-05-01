@@ -1,6 +1,6 @@
 {
   "name": "ql-api",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Quake Live dedicated server rcon and stats API clients",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -23,6 +23,6 @@
     "typescript": "^4.2.4"
   },
   "dependencies": {
-    "zeromq-ts": "^1.0.0"
+    "zeromq-ts": "^0.1.0"
   }
 }
