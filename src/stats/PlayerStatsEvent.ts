@@ -34,7 +34,7 @@ export default class PlayerStatsEvent {
     ammo: number
     armor: number
     armorRegeneration: number
-    battlesuit: number
+    battleSuit: number
     doubler: number
     flight: number
     greenArmor: number
@@ -47,7 +47,7 @@ export default class PlayerStatsEvent {
     medKit: number
     megaHealth: number
     otherHoldable: number
-    otherPowerup: number
+    otherPowerUp: number
     portal: number
     quadDamage: number
     redArmor: number
@@ -65,143 +65,143 @@ export default class PlayerStatsEvent {
   warmup: boolean
   weapons: {
     bfg: {
-      d: number
-      dg: number
-      dr: number
-      h: number
-      k: number
+      deaths: number
+      damageGiven: number
+      damageReceived: number
+      hits: number
+      kills: number
       p: number
-      s: number
+      shots: number
       t: number
     }
     chainGun: {
-      d: number
-      dg: number
-      dr: number
-      h: number
-      k: number
+      deaths: number
+      damageGiven: number
+      damageReceived: number
+      hits: number
+      kills: number
       p: number
-      s: number
+      shots: number
       t: number
     }
     gauntlet: {
-      d: number
-      dg: number
-      dr: number
-      h: number
-      k: number
+      deaths: number
+      damageGiven: number
+      damageReceived: number
+      hits: number
+      kills: number
       p: number
-      s: number
+      shots: number
       t: number
     }
     grenadeLauncher: {
-      d: number
-      dg: number
-      dr: number
-      h: number
-      k: number
+      deaths: number
+      damageGiven: number
+      damageReceived: number
+      hits: number
+      kills: number
       p: number
-      s: number
+      shots: number
       t: number
     }
     heavyMachineGun: {
-      d: number
-      dg: number
-      dr: number
-      h: number
-      k: number
+      deaths: number
+      damageGiven: number
+      damageReceived: number
+      hits: number
+      kills: number
       p: number
-      s: number
+      shots: number
       t: number
     }
     lightningGun: {
-      d: number
-      dg: number
-      dr: number
-      h: number
-      k: number
+      deaths: number
+      damageGiven: number
+      damageReceived: number
+      hits: number
+      kills: number
       p: number
-      s: number
+      shots: number
       t: number
     }
     machineGun: {
-      d: number
-      dg: number
-      dr: number
-      h: number
-      k: number
+      deaths: number
+      damageGiven: number
+      damageReceived: number
+      hits: number
+      kills: number
       p: number
-      s: number
+      shots: number
       t: number
     }
     nailGun: {
-      d: number
-      dg: number
-      dr: number
-      h: number
-      k: number
+      deaths: number
+      damageGiven: number
+      damageReceived: number
+      hits: number
+      kills: number
       p: number
-      s: number
+      shots: number
       t: number
     }
     otherWeapon: {
-      d: number
-      dg: number
-      dr: number
-      h: number
-      k: number
+      deaths: number
+      damageGiven: number
+      damageReceived: number
+      hits: number
+      kills: number
       p: number
-      s: number
+      shots: number
       t: number
     }
     plasmaGun: {
-      d: number
-      dg: number
-      dr: number
-      h: number
-      k: number
+      deaths: number
+      damageGiven: number
+      damageReceived: number
+      hits: number
+      kills: number
       p: number
-      s: number
+      shots: number
       t: number
     }
     proximityMine: {
-      d: number
-      dg: number
-      dr: number
-      h: number
-      k: number
+      deaths: number
+      damageGiven: number
+      damageReceived: number
+      hits: number
+      kills: number
       p: number
-      s: number
+      shots: number
       t: number
     }
     railGun: {
-      d: number
-      dg: number
-      dr: number
-      h: number
-      k: number
+      deaths: number
+      damageGiven: number
+      damageReceived: number
+      hits: number
+      kills: number
       p: number
-      s: number
+      shots: number
       t: number
     }
     rocketLauncher: {
-      d: number
-      dg: number
-      dr: number
-      h: number
-      k: number
+      deaths: number
+      damageGiven: number
+      damageReceived: number
+      hits: number
+      kills: number
       p: number
-      s: number
+      shots: number
       t: number
     }
     shotGun: {
-      d: number
-      dg: number
-      dr: number
-      h: number
-      k: number
+      deaths: number
+      damageGiven: number
+      damageReceived: number
+      hits: number
+      kills: number
       p: number
-      s: number
+      shots: number
       t: number
     }
   }
@@ -255,7 +255,7 @@ export default class PlayerStatsEvent {
       ammo: data['PICKUPS']['AMMO'],
       armor: data['PICKUPS']['ARMOR'],
       armorRegeneration: data['PICKUPS']['ARMOR_REGEN'],
-      battlesuit: data['PICKUPS']['BATTLESUIT'],
+      battleSuit: data['PICKUPS']['BATTLESUIT'],
       doubler: data['PICKUPS']['DOUBLER'],
       flight: data['PICKUPS']['FLIGHT'],
       greenArmor: data['PICKUPS']['GREEN_ARMOR'],
@@ -268,7 +268,7 @@ export default class PlayerStatsEvent {
       medKit: data['PICKUPS']['MEDKIT'],
       megaHealth: data['PICKUPS']['MEGA_HEALTH'],
       otherHoldable: data['PICKUPS']['OTHER_HOLDABLE'],
-      otherPowerup: data['PICKUPS']['OTHER_POWERUP'],
+      otherPowerUp: data['PICKUPS']['OTHER_POWERUP'],
       portal: data['PICKUPS']['PORTAL'],
       quadDamage: data['PICKUPS']['QUAD'],
       redArmor: data['PICKUPS']['RED_ARMOR'],
@@ -280,143 +280,143 @@ export default class PlayerStatsEvent {
 
     event.weapons = {
       bfg: {
-        d: data['WEAPONS']['BFG']['D'],
-        dg: data['WEAPONS']['BFG']['DG'],
-        dr: data['WEAPONS']['BFG']['DR'],
-        h: data['WEAPONS']['BFG']['H'],
-        k: data['WEAPONS']['BFG']['K'],
+        deaths: data['WEAPONS']['BFG']['D'],
+        damageGiven: data['WEAPONS']['BFG']['DG'],
+        damageReceived: data['WEAPONS']['BFG']['DR'],
+        hits: data['WEAPONS']['BFG']['H'],
+        kills: data['WEAPONS']['BFG']['K'],
         p: data['WEAPONS']['BFG']['P'],
-        s: data['WEAPONS']['BFG']['S'],
+        shots: data['WEAPONS']['BFG']['S'],
         t: data['WEAPONS']['BFG']['T']
       },
       chainGun: {
-        d: data['WEAPONS']['CHAINGUN']['D'],
-        dg: data['WEAPONS']['CHAINGUN']['DG'],
-        dr: data['WEAPONS']['CHAINGUN']['DR'],
-        h: data['WEAPONS']['CHAINGUN']['H'],
-        k: data['WEAPONS']['CHAINGUN']['K'],
+        deaths: data['WEAPONS']['CHAINGUN']['D'],
+        damageGiven: data['WEAPONS']['CHAINGUN']['DG'],
+        damageReceived: data['WEAPONS']['CHAINGUN']['DR'],
+        hits: data['WEAPONS']['CHAINGUN']['H'],
+        kills: data['WEAPONS']['CHAINGUN']['K'],
         p: data['WEAPONS']['CHAINGUN']['P'],
-        s: data['WEAPONS']['CHAINGUN']['S'],
+        shots: data['WEAPONS']['CHAINGUN']['S'],
         t: data['WEAPONS']['CHAINGUN']['T']
       },
       gauntlet: {
-        d: data['WEAPONS']['GAUNTLET']['D'],
-        dg: data['WEAPONS']['GAUNTLET']['DG'],
-        dr: data['WEAPONS']['GAUNTLET']['DR'],
-        h: data['WEAPONS']['GAUNTLET']['H'],
-        k: data['WEAPONS']['GAUNTLET']['K'],
+        deaths: data['WEAPONS']['GAUNTLET']['D'],
+        damageGiven: data['WEAPONS']['GAUNTLET']['DG'],
+        damageReceived: data['WEAPONS']['GAUNTLET']['DR'],
+        hits: data['WEAPONS']['GAUNTLET']['H'],
+        kills: data['WEAPONS']['GAUNTLET']['K'],
         p: data['WEAPONS']['GAUNTLET']['P'],
-        s: data['WEAPONS']['GAUNTLET']['S'],
+        shots: data['WEAPONS']['GAUNTLET']['S'],
         t: data['WEAPONS']['GAUNTLET']['T']
       },
       grenadeLauncher: {
-        d: data['WEAPONS']['GRENADE']['D'],
-        dg: data['WEAPONS']['GRENADE']['DG'],
-        dr: data['WEAPONS']['GRENADE']['DR'],
-        h: data['WEAPONS']['GRENADE']['H'],
-        k: data['WEAPONS']['GRENADE']['K'],
+        deaths: data['WEAPONS']['GRENADE']['D'],
+        damageGiven: data['WEAPONS']['GRENADE']['DG'],
+        damageReceived: data['WEAPONS']['GRENADE']['DR'],
+        hits: data['WEAPONS']['GRENADE']['H'],
+        kills: data['WEAPONS']['GRENADE']['K'],
         p: data['WEAPONS']['GRENADE']['P'],
-        s: data['WEAPONS']['GRENADE']['S'],
+        shots: data['WEAPONS']['GRENADE']['S'],
         t: data['WEAPONS']['GRENADE']['T']
       },
       heavyMachineGun: {
-        d: data['WEAPONS']['HMG']['D'],
-        dg: data['WEAPONS']['HMG']['DG'],
-        dr: data['WEAPONS']['HMG']['DR'],
-        h: data['WEAPONS']['HMG']['H'],
-        k: data['WEAPONS']['HMG']['K'],
+        deaths: data['WEAPONS']['HMG']['D'],
+        damageGiven: data['WEAPONS']['HMG']['DG'],
+        damageReceived: data['WEAPONS']['HMG']['DR'],
+        hits: data['WEAPONS']['HMG']['H'],
+        kills: data['WEAPONS']['HMG']['K'],
         p: data['WEAPONS']['HMG']['P'],
-        s: data['WEAPONS']['HMG']['S'],
+        shots: data['WEAPONS']['HMG']['S'],
         t: data['WEAPONS']['HMG']['T']
       },
       lightningGun: {
-        d: data['WEAPONS']['LIGHTNING']['D'],
-        dg: data['WEAPONS']['LIGHTNING']['DG'],
-        dr: data['WEAPONS']['LIGHTNING']['DR'],
-        h: data['WEAPONS']['LIGHTNING']['H'],
-        k: data['WEAPONS']['LIGHTNING']['K'],
+        deaths: data['WEAPONS']['LIGHTNING']['D'],
+        damageGiven: data['WEAPONS']['LIGHTNING']['DG'],
+        damageReceived: data['WEAPONS']['LIGHTNING']['DR'],
+        hits: data['WEAPONS']['LIGHTNING']['H'],
+        kills: data['WEAPONS']['LIGHTNING']['K'],
         p: data['WEAPONS']['LIGHTNING']['P'],
-        s: data['WEAPONS']['LIGHTNING']['S'],
+        shots: data['WEAPONS']['LIGHTNING']['S'],
         t: data['WEAPONS']['LIGHTNING']['T']
       },
       machineGun: {
-        d: data['WEAPONS']['MACHINEGUN']['D'],
-        dg: data['WEAPONS']['MACHINEGUN']['DG'],
-        dr: data['WEAPONS']['MACHINEGUN']['DR'],
-        h: data['WEAPONS']['MACHINEGUN']['H'],
-        k: data['WEAPONS']['MACHINEGUN']['K'],
+        deaths: data['WEAPONS']['MACHINEGUN']['D'],
+        damageGiven: data['WEAPONS']['MACHINEGUN']['DG'],
+        damageReceived: data['WEAPONS']['MACHINEGUN']['DR'],
+        hits: data['WEAPONS']['MACHINEGUN']['H'],
+        kills: data['WEAPONS']['MACHINEGUN']['K'],
         p: data['WEAPONS']['MACHINEGUN']['P'],
-        s: data['WEAPONS']['MACHINEGUN']['S'],
+        shots: data['WEAPONS']['MACHINEGUN']['S'],
         t: data['WEAPONS']['MACHINEGUN']['T']
       },
       nailGun: {
-        d: data['WEAPONS']['NAILGUN']['D'],
-        dg: data['WEAPONS']['NAILGUN']['DG'],
-        dr: data['WEAPONS']['NAILGUN']['DR'],
-        h: data['WEAPONS']['NAILGUN']['H'],
-        k: data['WEAPONS']['NAILGUN']['K'],
+        deaths: data['WEAPONS']['NAILGUN']['D'],
+        damageGiven: data['WEAPONS']['NAILGUN']['DG'],
+        damageReceived: data['WEAPONS']['NAILGUN']['DR'],
+        hits: data['WEAPONS']['NAILGUN']['H'],
+        kills: data['WEAPONS']['NAILGUN']['K'],
         p: data['WEAPONS']['NAILGUN']['P'],
-        s: data['WEAPONS']['NAILGUN']['S'],
+        shots: data['WEAPONS']['NAILGUN']['S'],
         t: data['WEAPONS']['NAILGUN']['T']
       },
       otherWeapon: {
-        d: data['WEAPONS']['OTHER_WEAPON']['D'],
-        dg: data['WEAPONS']['OTHER_WEAPON']['DG'],
-        dr: data['WEAPONS']['OTHER_WEAPON']['DR'],
-        h: data['WEAPONS']['OTHER_WEAPON']['H'],
-        k: data['WEAPONS']['OTHER_WEAPON']['K'],
+        deaths: data['WEAPONS']['OTHER_WEAPON']['D'],
+        damageGiven: data['WEAPONS']['OTHER_WEAPON']['DG'],
+        damageReceived: data['WEAPONS']['OTHER_WEAPON']['DR'],
+        hits: data['WEAPONS']['OTHER_WEAPON']['H'],
+        kills: data['WEAPONS']['OTHER_WEAPON']['K'],
         p: data['WEAPONS']['OTHER_WEAPON']['P'],
-        s: data['WEAPONS']['OTHER_WEAPON']['S'],
+        shots: data['WEAPONS']['OTHER_WEAPON']['S'],
         t: data['WEAPONS']['OTHER_WEAPON']['T']
       },
       plasmaGun: {
-        d: data['WEAPONS']['PLASMA']['D'],
-        dg: data['WEAPONS']['PLASMA']['DG'],
-        dr: data['WEAPONS']['PLASMA']['DR'],
-        h: data['WEAPONS']['PLASMA']['H'],
-        k: data['WEAPONS']['PLASMA']['K'],
+        deaths: data['WEAPONS']['PLASMA']['D'],
+        damageGiven: data['WEAPONS']['PLASMA']['DG'],
+        damageReceived: data['WEAPONS']['PLASMA']['DR'],
+        hits: data['WEAPONS']['PLASMA']['H'],
+        kills: data['WEAPONS']['PLASMA']['K'],
         p: data['WEAPONS']['PLASMA']['P'],
-        s: data['WEAPONS']['PLASMA']['S'],
+        shots: data['WEAPONS']['PLASMA']['S'],
         t: data['WEAPONS']['PLASMA']['T']
       },
       proximityMine: {
-        d: data['WEAPONS']['PROXMINE']['D'],
-        dg: data['WEAPONS']['PROXMINE']['DG'],
-        dr: data['WEAPONS']['PROXMINE']['DR'],
-        h: data['WEAPONS']['PROXMINE']['H'],
-        k: data['WEAPONS']['PROXMINE']['K'],
+        deaths: data['WEAPONS']['PROXMINE']['D'],
+        damageGiven: data['WEAPONS']['PROXMINE']['DG'],
+        damageReceived: data['WEAPONS']['PROXMINE']['DR'],
+        hits: data['WEAPONS']['PROXMINE']['H'],
+        kills: data['WEAPONS']['PROXMINE']['K'],
         p: data['WEAPONS']['PROXMINE']['P'],
-        s: data['WEAPONS']['PROXMINE']['S'],
+        shots: data['WEAPONS']['PROXMINE']['S'],
         t: data['WEAPONS']['PROXMINE']['T']
       },
       railGun: {
-        d: data['WEAPONS']['RAILGUN']['D'],
-        dg: data['WEAPONS']['RAILGUN']['DG'],
-        dr: data['WEAPONS']['RAILGUN']['DR'],
-        h: data['WEAPONS']['RAILGUN']['H'],
-        k: data['WEAPONS']['RAILGUN']['K'],
+        deaths: data['WEAPONS']['RAILGUN']['D'],
+        damageGiven: data['WEAPONS']['RAILGUN']['DG'],
+        damageReceived: data['WEAPONS']['RAILGUN']['DR'],
+        hits: data['WEAPONS']['RAILGUN']['H'],
+        kills: data['WEAPONS']['RAILGUN']['K'],
         p: data['WEAPONS']['RAILGUN']['P'],
-        s: data['WEAPONS']['RAILGUN']['S'],
+        shots: data['WEAPONS']['RAILGUN']['S'],
         t: data['WEAPONS']['RAILGUN']['T']
       },
       rocketLauncher: {
-        d: data['WEAPONS']['ROCKET']['D'],
-        dg: data['WEAPONS']['ROCKET']['DG'],
-        dr: data['WEAPONS']['ROCKET']['DR'],
-        h: data['WEAPONS']['ROCKET']['H'],
-        k: data['WEAPONS']['ROCKET']['K'],
+        deaths: data['WEAPONS']['ROCKET']['D'],
+        damageGiven: data['WEAPONS']['ROCKET']['DG'],
+        damageReceived: data['WEAPONS']['ROCKET']['DR'],
+        hits: data['WEAPONS']['ROCKET']['H'],
+        kills: data['WEAPONS']['ROCKET']['K'],
         p: data['WEAPONS']['ROCKET']['P'],
-        s: data['WEAPONS']['ROCKET']['S'],
+        shots: data['WEAPONS']['ROCKET']['S'],
         t: data['WEAPONS']['ROCKET']['T']
       },
       shotGun: {
-        d: data['WEAPONS']['SHOTGUN']['D'],
-        dg: data['WEAPONS']['SHOTGUN']['DG'],
-        dr: data['WEAPONS']['SHOTGUN']['DR'],
-        h: data['WEAPONS']['SHOTGUN']['H'],
-        k: data['WEAPONS']['SHOTGUN']['K'],
+        deaths: data['WEAPONS']['SHOTGUN']['D'],
+        damageGiven: data['WEAPONS']['SHOTGUN']['DG'],
+        damageReceived: data['WEAPONS']['SHOTGUN']['DR'],
+        hits: data['WEAPONS']['SHOTGUN']['H'],
+        kills: data['WEAPONS']['SHOTGUN']['K'],
         p: data['WEAPONS']['SHOTGUN']['P'],
-        s: data['WEAPONS']['SHOTGUN']['S'],
+        shots: data['WEAPONS']['SHOTGUN']['S'],
         t: data['WEAPONS']['SHOTGUN']['T']
       }
     }

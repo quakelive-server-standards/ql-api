@@ -7,15 +7,15 @@ export default class MatchReport {
   exitMsg: string // maybe enum? "Shutdown"
   factory: string
   factoryTitle: string
-  firstScorer: string|'none' // none needs to become null
+  firstScorer: string|'none'
   fragLimit: number
   gameLength: number
   gameType: GameType
-  infected: number
+  infected: number // what is that?
   instagib: number
   lastLeadChangeTime: number
-  lastScorer: string|'none' // none needs to become null
-  lastTeamScorer: string|'none' // none needs to become null
+  lastScorer: string|'none'
+  lastTeamScorer: string|'none'
   map: string
   matchGuid: string
   mercyLimit: number
@@ -26,8 +26,8 @@ export default class MatchReport {
   serverTitle: string
   timeLimit: number
   training: number
-  tScore0: number // what is this?
-  tScore1: number // what is this?
+  teamScore0: number
+  teamScore1: number
 
   static fromQl(data: any): MatchReport {
     let event = new MatchReport
@@ -56,8 +56,8 @@ export default class MatchReport {
     event.serverTitle = data['SERVER_TITLE']
     event.timeLimit = data['TIME_LIMIT']
     event.training = data['TRAINING']
-    event.tScore0 = data['TSCORE0']
-    event.tScore1 = data['TSCORE1']
+    event.teamScore0 = data['TSCORE0']
+    event.teamScore1 = data['TSCORE1']
 
     return event
   }

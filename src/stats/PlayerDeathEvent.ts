@@ -6,14 +6,14 @@ import WeaponType from './types/WeaponType'
 export default class PlayerDeathEvent {
 
   matchGuid: string
-  mod: ModType
-  otherTeamAlive: any | null // data type not known
-  otherTeamDead: any | null // data type not known
-  round: any | null // data type not known
+  mod: ModType // what doe that mean?
+  otherTeamAlive: number | null // data type not known
+  otherTeamDead: number | null // data type not known
+  round: number | null
   suicide: boolean
-  teamkill: boolean
-  teamAlive: any | null // data type not known
-  teamDead: any | null // data type not known
+  teamKill: boolean
+  teamAlive: number | null // data type not known
+  teamDead: number | null // data type not known
   time: number
   warmup: boolean
 
@@ -24,17 +24,17 @@ export default class PlayerDeathEvent {
     bot: boolean
     botSkill: number | null
     health: number
-    holdable: HoldableType | null // data type not known
+    holdable: HoldableType | null
     name: string
     position: {
       x: number
       y: number
       z: number
     }
-    powerUps: PowerUpType[] | null // data type not known
+    powerUps: PowerUpType[] | null
     speed: number
     steamId: string
-    submerged: boolean
+    submerged: boolean // what is this?
     team: number
     view: {
       x: number
@@ -51,17 +51,17 @@ export default class PlayerDeathEvent {
     bot: boolean
     botSkill: number | null
     health: number
-    holdable: HoldableType | null // data type not known
+    holdable: HoldableType | null
     name: string
     position: {
       x: number
       y: number
       z: number
     }
-    powerUps: PowerUpType[] | null // data type not known
+    powerUps: PowerUpType[] | null
     speed: number
     steamId: string
-    streak: number
+    streak: number // what is this?
     submerged: boolean
     team: number
     view: {
@@ -81,7 +81,7 @@ export default class PlayerDeathEvent {
     event.otherTeamDead = data['OTHER_TEAM_DEAD']
     event.round = data['ROUND']
     event.suicide = data['SUICIDE']
-    event.teamkill = data['TEAMKILL']
+    event.teamKill = data['TEAMKILL']
     event.teamAlive = data['TEAM_ALIVE']
     event.teamDead = data['TEAM_DEAD']
     event.time = data['TIME']
