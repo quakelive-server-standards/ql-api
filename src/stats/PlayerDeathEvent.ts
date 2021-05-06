@@ -7,13 +7,13 @@ export default class PlayerDeathEvent {
 
   matchGuid: string
   mod: ModType // what doe that mean?
-  otherTeamAlive: number | null // data type not known
-  otherTeamDead: number | null // data type not known
+  otherTeamAlive: number | null
+  otherTeamDead: number | null
   round: number | null
   suicide: boolean
   teamKill: boolean
-  teamAlive: number | null // data type not known
-  teamDead: number | null // data type not known
+  teamAlive: number | null
+  teamDead: number | null
   time: number
   warmup: boolean
 
@@ -34,8 +34,8 @@ export default class PlayerDeathEvent {
     powerUps: PowerUpType[] | null
     speed: number
     steamId: string
-    submerged: boolean // what is this?
-    team: number
+    submerged: boolean
+    team: number // might be of type TeamType?
     view: {
       x: number
       y: number
@@ -61,9 +61,9 @@ export default class PlayerDeathEvent {
     powerUps: PowerUpType[] | null
     speed: number
     steamId: string
-    streak: number // what is this?
+    streak: number
     submerged: boolean
-    team: number
+    team: number // might be of type TeamType?
     view: {
       x: number
       y: number

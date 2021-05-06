@@ -1,15 +1,27 @@
 export default class PlayerStatsEvent {
 
-  aborted: boolean
+  aborted: boolean // what is this?
+  deaths: number
+  kills: number
+  lose: number // what is this?
+  matchGuid: string
+  maxStreak: number
+  model: string
+  name: string
+  playTime: number
+  quit: number // maybe boolean? what is the difference to aborted?
+  rank: number
+  score: number
+  steamId: string
+  tiedRank: number // what is this?
+  warmup: boolean
+  win: number // what is this?
+
   damage: {
     dealt: number
     taken: number
   }
-  deaths: number
-  kills: number
-  lose: number
-  matchGuid: string
-  maxStreak: number
+
   medals: {
     accuracy: number
     assists: number
@@ -28,8 +40,7 @@ export default class PlayerStatsEvent {
     rampage: number
     revenge: number
   }
-  model: string
-  name: string
+
   pickups: {
     ammo: number
     armor: number
@@ -56,13 +67,7 @@ export default class PlayerStatsEvent {
     teleporter: number
     yellowArmor: number
   }
-  playTime: number
-  quit: number
-  rank: number
-  score: number
-  steamId: string
-  tiedRank: number
-  warmup: boolean
+
   weapons: {
     bfg: {
       deaths: number
@@ -205,7 +210,6 @@ export default class PlayerStatsEvent {
       t: number
     }
   }
-  win: number
 
   static fromQl(data: any): PlayerStatsEvent {
     let event = new PlayerStatsEvent

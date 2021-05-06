@@ -7,14 +7,14 @@ export default class PlayerKillEvent {
 
   matchGuid: string
   time: number
-  mod: ModType
-  otherTeamAlive: any | null // data type not known
-  otherTeamDead: any | null // data type not known
-  round: any | null // data type not known
+  mod: ModType // what is this translated?
+  otherTeamAlive: number | null
+  otherTeamDead: number | null
+  round: number | null
   suicide: boolean
   teamkill: boolean
-  teamAlive: any | null // data type not known
-  teamDead: any | null // data type not known
+  teamAlive: number | null
+  teamDead: number | null
   warmup: boolean
 
   killer: {
@@ -24,18 +24,18 @@ export default class PlayerKillEvent {
     bot: boolean
     botSkill: number | null
     health: number
-    holdable: HoldableType | null // data type not known
+    holdable: HoldableType | null
     name: string
     position: {
       x: number
       y: number
       z: number
     }
-    powerUps: PowerUpType[] | null // data type not known
+    powerUps: PowerUpType[] | null
     speed: number
     steamId: string
     submerged: boolean
-    team: number
+    team: number // might be of type TeamType?
     view: {
       x: number
       y: number
@@ -51,19 +51,19 @@ export default class PlayerKillEvent {
     bot: boolean
     botSkill: number | null
     health: number
-    holdable: HoldableType | null // data type not known
+    holdable: HoldableType | null
     name: string
     position: {
       x: number
       y: number
       z: number
     }
-    powerUps: PowerUpType[] | null // data type not known
+    powerUps: PowerUpType[] | null
     speed: number
     steamId: string
     streak: number
     submerged: boolean
-    team: number
+    team: number // might be of type TeamType?
     view: {
       x: number
       y: number

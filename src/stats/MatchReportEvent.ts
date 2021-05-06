@@ -2,7 +2,7 @@ import GameType from './types/GameType'
 
 export default class MatchReport {
   
-  aborted: boolean
+  aborted: boolean // what is this exactly?
   captureLimit: number
   exitMsg: string // maybe enum? "Shutdown"
   factory: string
@@ -11,21 +11,21 @@ export default class MatchReport {
   fragLimit: number
   gameLength: number
   gameType: GameType
-  infected: number // what is that?
-  instagib: number
+  infected: number // maybe boolean?
+  instagib: number // maybe boolean?
   lastLeadChangeTime: number
   lastScorer: string|'none'
   lastTeamScorer: string|'none'
   map: string
   matchGuid: string
   mercyLimit: number
-  quadHog: number
+  quadHog: number // maybe boolean?
   restarted: number
   roundLimit: number
   scoreLimit: number
   serverTitle: string
   timeLimit: number
-  training: number
+  training: number // maybe boolean?
   teamScore0: number
   teamScore1: number
 

@@ -5,8 +5,8 @@ export default class MatchStartedEvent {
   factoryTitle: string
   fragLimit: string
   gameType: string
-  infected: number
-  instagib: number
+  infected: number // maybe boolean?
+  instagib: number // maybe boolean?
   map: string
   matchGuid: string
   mercyLimit: number
@@ -15,12 +15,12 @@ export default class MatchStartedEvent {
     steamId: string
     team: number
   }[]
-  quadHog: number
+  quadHog: number // maybe boolean?
   roundLimit: number
   scoreLimit: number
   serverTitle: string
   timeLimit: number
-  training: number
+  training: number // maybe boolean?
  
   static fromQl(data: any): MatchStartedEvent {
     let event = new MatchStartedEvent
