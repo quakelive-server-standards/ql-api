@@ -14,7 +14,7 @@ export default class PlayerMedalEvent {
     let event = new PlayerMedalEvent
 
     event.matchGuid = data['MATCH_GUID']
-    event.medal = data['MEDAL']
+    event.medal = MedalType[data['MEDAL']] || data['MEDAL']
     event.name = data['NAME']
     event.steamId = data['STEAM_ID']
     event.time = data['TIME']

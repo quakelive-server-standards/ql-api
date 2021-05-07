@@ -1,8 +1,8 @@
 enum TeamType {
-  BLUE = 'BLUE',
-  FREE = 'FREE',
-  RED = 'RED',
-  SPECTATOR = 'SPECTATOR'
+  BLUE = 'Blue',
+  FREE = 'Free',
+  RED = 'Red',
+  SPECTATOR = 'Spectator'
 }
 
 export default TeamType

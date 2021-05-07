@@ -1,20 +1,20 @@
 enum MedalType {
-  ACCURACY = 'ACCURACY',
-  ASSISTS = 'ASSISTS',
-  CAPTURES = 'CAPTURES',
-  COMBOKILL = 'COMBOKILL',
-  DEFENDS = 'DEFENDS',
-  EXCELLENT = 'EXCELLENT',
-  FIRSTFRAGE = 'FIRSTFRAG',
-  HEADSHOT = 'HEADSHOT',
-  HUMILIATION = 'HUMILIATION',
-  IMPRESSIVE = 'IMPRESSIVE',
-  MIDAIR = 'MIDAIR',
-  PERFECT = 'PERFECT',
-  PERFORATED = 'PERFORATED',
-  QUADGOD = 'QUADGOD',
-  RAMPAGE = 'RAMPAGE',
-  REVENGE = 'REVENGE'
+  ACCURACY = 'Accuracy',
+  ASSISTS = 'Assists',
+  CAPTURES = 'Captures',
+  COMBOKILL = 'Combo Kill',
+  DEFENDS = 'Defends',
+  EXCELLENT = 'Excellent',
+  FIRSTFRAGE = 'First Frag',
+  HEADSHOT = 'Headshot',
+  HUMILIATION = 'Humiliation',
+  IMPRESSIVE = 'Impressive',
+  MIDAIR = 'Midair',
+  PERFECT = 'Perfect',
+  PERFORATED = 'Perforated',
+  QUADGOD = 'Quad God',
+  RAMPAGE = 'Rampage',
+  REVENGE = 'Revenge'
 }
 
 export default MedalType

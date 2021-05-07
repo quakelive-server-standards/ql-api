@@ -1,18 +1,18 @@
 enum WeaponType {
   BFG = 'BFG',
-  CHAINGUN = 'CHAINGUN',
-  GAUNTLET = 'GAUNTLET',
-  GRENADE = 'GRENADE',
-  HMG = 'HMG',
-  LIGHTNING = 'LIGHTNING',
-  MACHINEGUN = 'MACHINEGUN',
-  NAILGUN = 'NAILGUN',
-  OTHER_WEAPON = 'OTHER_WEAPON',
-  PLASMA = 'PLASMA',
-  PROXMINE = 'PROXMINE',
-  RAILGUN = 'RAILGUN',
-  ROCKET = 'ROCKET',
-  SHOTGUN = 'SHOTGUN'
+  CHAINGUN = 'Chain Gun',
+  GAUNTLET = 'Gauntlet',
+  GRENADE = 'Grenade Launcher',
+  HMG = 'Heavy Machine Gun',
+  LIGHTNING = 'Lightning Gun',
+  MACHINEGUN = 'Machine Gun',
+  NAILGUN = 'Nailgun',
+  OTHER_WEAPON = 'Other weapon',
+  PLASMA = 'Plasma Gun',
+  PROXMINE = 'Proximity Launcher',
+  RAILGUN = 'Railgun',
+  ROCKET = 'Rocket Launcher',
+  SHOTGUN = 'Shotgun'
 }
 
 export default WeaponType

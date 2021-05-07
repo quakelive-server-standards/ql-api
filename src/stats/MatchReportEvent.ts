@@ -40,7 +40,7 @@ export default class MatchReport {
     event.firstScorer = data['FIRST_SCORER']
     event.fragLimit = data['FRAG_LIMIT']
     event.gameLength = data['GAME_LENGTH']
-    event.gameType = data['GAME_TYPE']
+    event.gameType = GameType[data['GAME_TYPE']] || data['GAME_TYPE']
     event.infected = data['INFECTED']
     event.instagib = data['INSTAGIB']
     event.lastLeadChangeTime = data['LAST_LEAD_CHANGE_TIME']

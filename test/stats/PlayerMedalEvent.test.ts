@@ -1,6 +1,7 @@
 import { expect } from 'chai'
 import 'mocha'
 import PlayerMedalEvent from '../../src/stats/PlayerMedalEvent'
+import MedalType from '../../src/stats/types/MedalType'
 
 describe('stats/PlayerMedalEvent', function() {
   it('should create an object out of the QL event', function() {
@@ -20,7 +21,7 @@ describe('stats/PlayerMedalEvent', function() {
     let event = PlayerMedalEvent.fromQl(ql['DATA'])
 
     expect(event.matchGuid).to.equal(ql['DATA']['MATCH_GUID'])
-    expect(event.medal).to.equal(ql['DATA']['MEDAL'])
+    expect(event.medal).to.equal(MedalType[ql['DATA']['MEDAL']] || ql['DATA']['MEDAL'])
     expect(event.name).to.equal(ql['DATA']['NAME'])
     expect(event.steamId).to.equal(ql['DATA']['STEAM_ID'])
     expect(event.time).to.equal(ql['DATA']['TIME'])

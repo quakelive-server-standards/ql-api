@@ -76,7 +76,7 @@ export default class PlayerDeathEvent {
     let event = new PlayerDeathEvent
  
     event.matchGuid = data['MATCH_GUID']
-    event.mod = data['MOD']
+    event.mod = ModType[data['MOD']] || data['MOD']
     event.otherTeamAlive = data['OTHER_TEAM_ALIVE']
     event.otherTeamDead = data['OTHER_TEAM_DEAD']
     event.round = data['ROUND']
@@ -97,14 +97,14 @@ export default class PlayerDeathEvent {
         bot: data['KILLER']['BOT'],
         botSkill: data['KILLER']['BOT_SKILL'],
         health: data['KILLER']['HEALTH'],
-        holdable: data['KILLER']['HOLDABLE'],
+        holdable: HoldableType[data['KILLER']['HOLDABLE']] || data['KILLER']['HOLDABLE'],
         name: data['KILLER']['NAME'],
         position: {
           x: data['KILLER']['POSITION']['X'],
           y: data['KILLER']['POSITION']['Y'],
           z: data['KILLER']['POSITION']['Z']
         },
-        powerUps: data['KILLER']['POWERUPS'],
+        powerUps: data['KILLER']['POWERUPS'] instanceof Array ? data['KILLER']['POWERUPS'].map(powerUp => PowerUpType[powerUp] || powerUp) : null,
         speed: data['KILLER']['SPEED'],
         steamId: data['KILLER']['STEAM_ID'],
         submerged: data['KILLER']['SUBMERGED'],
@@ -114,7 +114,7 @@ export default class PlayerDeathEvent {
           y: data['KILLER']['VIEW']['Y'],
           z: data['KILLER']['VIEW']['Z']
         },
-        weapon: data['KILLER']['WEAPON']
+        weapon: WeaponType[data['KILLER']['WEAPON']] || data['KILLER']['WEAPON']
       }  
     }
   
@@ -125,14 +125,14 @@ export default class PlayerDeathEvent {
       bot: data['VICTIM']['BOT'],
       botSkill: data['VICTIM']['BOT_SKILL'],
       health: data['VICTIM']['HEALTH'],
-      holdable: data['VICTIM']['HOLDABLE'],
+      holdable: HoldableType[data['VICTIM']['HOLDABLE']] || data['VICTIM']['HOLDABLE'],
       name: data['VICTIM']['NAME'],
       position: {
         x: data['VICTIM']['POSITION']['X'],
         y: data['VICTIM']['POSITION']['Y'],
         z: data['VICTIM']['POSITION']['Z']
       },
-      powerUps: data['VICTIM']['POWERUPS'],
+      powerUps: data['VICTIM']['POWERUPS'] instanceof Array ? data['VICTIM']['POWERUPS'].map(powerUp => PowerUpType[powerUp] || powerUp) : null,
       speed: data['VICTIM']['SPEED'],
       steamId: data['VICTIM']['STEAM_ID'],
       streak: data['VICTIM']['STREAK'],
@@ -143,7 +143,7 @@ export default class PlayerDeathEvent {
         y: data['VICTIM']['VIEW']['Y'],
         z: data['VICTIM']['VIEW']['Z']
       },
-      weapon: data['VICTIM']['WEAPON']
+      weapon: WeaponType[data['VICTIM']['WEAPON']] || data['VICTIM']['WEAPON']
     }
  
     return event

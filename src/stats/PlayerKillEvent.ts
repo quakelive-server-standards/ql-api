@@ -94,14 +94,14 @@ export default class PlayerKillEvent {
       bot: data['KILLER']['BOT'],
       botSkill: data['KILLER']['BOT_SKILL'],
       health: data['KILLER']['HEALTH'],
-      holdable: data['KILLER']['HOLDABLE'],
+      holdable: HoldableType[data['KILLER']['HOLDABLE']] || data['KILLER']['HOLDABLE'],
       name: data['KILLER']['NAME'],
       position: {
         x: data['KILLER']['POSITION']['X'],
         y: data['KILLER']['POSITION']['Y'],
         z: data['KILLER']['POSITION']['Z']
       },
-      powerUps: data['KILLER']['POWERUPS'],
+      powerUps: data['KILLER']['POWERUPS'] instanceof Array ? data['KILLER']['POWERUPS'].map(powerUp => PowerUpType[powerUp] || powerUp) : null,
       speed: data['KILLER']['SPEED'],
       steamId: data['KILLER']['STEAM_ID'],
       submerged: data['KILLER']['SUBMERGED'],
@@ -111,7 +111,7 @@ export default class PlayerKillEvent {
         y: data['KILLER']['VIEW']['Y'],
         z: data['KILLER']['VIEW']['Z']
       },
-      weapon: data['KILLER']['WEAPON']
+      weapon: WeaponType[data['KILLER']['WEAPON']] || data['KILLER']['WEAPON']
     }
   
     event.victim = {
@@ -121,14 +121,14 @@ export default class PlayerKillEvent {
       bot: data['VICTIM']['BOT'],
       botSkill: data['VICTIM']['BOT_SKILL'],
       health: data['VICTIM']['HEALTH'],
-      holdable: data['VICTIM']['HOLDABLE'],
+      holdable: HoldableType[data['VICTIM']['HOLDABLE']] || data['VICTIM']['HOLDABLE'],
       name: data['VICTIM']['NAME'],
       position: {
         x: data['VICTIM']['POSITION']['X'],
         y: data['VICTIM']['POSITION']['Y'],
         z: data['VICTIM']['POSITION']['Z']
       },
-      powerUps: data['VICTIM']['POWERUPS'],
+      powerUps: data['VICTIM']['POWERUPS'] instanceof Array ? data['VICTIM']['POWERUPS'].map(powerUp => PowerUpType[powerUp] || powerUp) : null,
       speed: data['VICTIM']['SPEED'],
       steamId: data['VICTIM']['STEAM_ID'],
       streak: data['VICTIM']['STREAK'],
@@ -139,7 +139,7 @@ export default class PlayerKillEvent {
         y: data['VICTIM']['VIEW']['Y'],
         z: data['VICTIM']['VIEW']['Z']
       },
-      weapon: data['VICTIM']['WEAPON']
+      weapon: WeaponType[data['VICTIM']['WEAPON']] || data['VICTIM']['WEAPON']
     }
  
     return event

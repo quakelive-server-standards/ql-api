@@ -33,7 +33,7 @@ export default class PlayerStatsEvent {
     headshot: number
     humiliation: number
     impressive: number
-    midAir: number
+    midair: number
     perfect: number
     perforated: number
     quadGod: number
@@ -179,7 +179,7 @@ export default class PlayerStatsEvent {
       shots: number
       t: number
     }
-    railGun: {
+    railgun: {
       deaths: number
       damageGiven: number
       damageReceived: number
@@ -199,7 +199,7 @@ export default class PlayerStatsEvent {
       shots: number
       t: number
     }
-    shotGun: {
+    shotgun: {
       deaths: number
       damageGiven: number
       damageReceived: number
@@ -247,7 +247,7 @@ export default class PlayerStatsEvent {
       headshot: data['MEDALS']['HEADSHOT'],
       humiliation: data['MEDALS']['HUMILIATION'],
       impressive: data['MEDALS']['IMPRESSIVE'],
-      midAir: data['MEDALS']['MIDAIR'],
+      midair: data['MEDALS']['MIDAIR'],
       perfect: data['MEDALS']['PERFECT'],
       perforated: data['MEDALS']['PERFORATED'],
       quadGod: data['MEDALS']['QUADGOD'],
@@ -393,7 +393,7 @@ export default class PlayerStatsEvent {
         shots: data['WEAPONS']['PROXMINE']['S'],
         t: data['WEAPONS']['PROXMINE']['T']
       },
-      railGun: {
+      railgun: {
         deaths: data['WEAPONS']['RAILGUN']['D'],
         damageGiven: data['WEAPONS']['RAILGUN']['DG'],
         damageReceived: data['WEAPONS']['RAILGUN']['DR'],
@@ -413,7 +413,7 @@ export default class PlayerStatsEvent {
         shots: data['WEAPONS']['ROCKET']['S'],
         t: data['WEAPONS']['ROCKET']['T']
       },
-      shotGun: {
+      shotgun: {
         deaths: data['WEAPONS']['SHOTGUN']['D'],
         damageGiven: data['WEAPONS']['SHOTGUN']['DG'],
         damageReceived: data['WEAPONS']['SHOTGUN']['DR'],

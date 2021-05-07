@@ -1,15 +1,15 @@
 enum PowerUpType {
-  ARMOR_REGEN = 'ARMOR_REGEN',
-  BATTLESUIT = 'BATTLESUIT',
-  DOUBLER = 'DOUBLER',
-  FLIGHT = 'FLIGHT',
-  GUARD = 'GUARD',
-  HASTE = 'HASTE',
-  INVIS = 'INVIS',
-  INVULNERABILITY = 'INVULNERABILITY',
-  OTHER_POWERUP = 'OTHER_POWERUP',
-  QUAD = 'QUAD',
-  REGEN = 'REGEN'
+  ARMOR_REGEN = 'Armor Regeneration',
+  BATTLESUIT = 'Battle Suit',
+  DOUBLER = 'Doubler',
+  FLIGHT = 'Flight',
+  GUARD = 'Guard',
+  HASTE = 'Haste',
+  INVIS = 'Invisibility',
+  INVULNERABILITY = 'Invulnerability',
+  OTHER_POWERUP = 'Other powerup',
+  QUAD = 'Quad Damage',
+  REGEN = 'Regeneration'
 }
 
 export default PowerUpType
