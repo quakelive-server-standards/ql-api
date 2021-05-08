@@ -1,19 +1,21 @@
-import { Cvars, Factory, Frag, FragParticipant, Map, Match, Player, Round, Server } from 'ql-model'
+import { Cvars, Factory, Frag, FragParticipant, Map, Match, Medal, Player, Round, Server, ServerVisit } from 'ql-model'
 import { MatchReportEvent, MatchStartedEvent, PlayerConnectEvent, PlayerDeathEvent, PlayerDisconnectEvent, PlayerKillEvent, PlayerMedalEvent, PlayerStatsEvent, PlayerSwitchTeamEvent, RoundOverEvent } from "."
 import GameType from './stats/types/GameType'
 
 export default abstract class ToQlModel {
 
-  integrate(server: Server, event: MatchReportEvent | MatchStartedEvent | PlayerConnectEvent | PlayerDeathEvent | PlayerDisconnectEvent | PlayerKillEvent | PlayerMedalEvent | PlayerStatsEvent | PlayerSwitchTeamEvent | RoundOverEvent) {
+  async integrate(serverIp: string, serverPort: number, event: MatchReportEvent | MatchStartedEvent | PlayerConnectEvent | PlayerDeathEvent | PlayerDisconnectEvent | PlayerKillEvent | PlayerMedalEvent | PlayerStatsEvent | PlayerSwitchTeamEvent | RoundOverEvent) {
+    let server = await this.getServer(serverIp, serverPort)
+
     if (event instanceof MatchReportEvent) {
-      let match = this.getMatch(event.matchGuid)
+      let match = await this.getMatch(event.matchGuid)
 
       if (match) {
-        let factory = this.getFactory(event.factory, event.factoryTitle, event.gameType)
-        let firstScorer = this.getPlayerByName(event.firstScorer)
-        let lastScorer = this.getPlayerByName(event.lastScorer)
-        let lastTeamScorer = this.getPlayerByName(event.lastTeamScorer)
-        let map = this.getMap(event.map)
+        let factory = await this.getFactory(event.factory, event.factoryTitle, event.gameType)
+        let firstScorer = await this.getPlayerByName(event.firstScorer)
+        let lastScorer = await this.getPlayerByName(event.lastScorer)
+        let lastTeamScorer = await this.getPlayerByName(event.lastTeamScorer)
+        let map = await this.getMap(event.map)
   
         match.factoryId = factory.id
         match.firstScorerId = firstScorer.id
@@ -43,8 +45,8 @@ export default abstract class ToQlModel {
       }
     }
     else if (event instanceof MatchStartedEvent) {
-      let factory = this.getFactory(event.factory, event.factoryTitle, event.gameType)
-      let map = this.getMap(event.map)
+      let factory = await this.getFactory(event.factory, event.factoryTitle, event.gameType)
+      let map = await this.getMap(event.map)
 
       let match = new Match
 
@@ -66,7 +68,15 @@ export default abstract class ToQlModel {
       match.cvars.g_training = event.training
     }
     else if (event instanceof PlayerConnectEvent) {
+      let player = await this.getPlayer(event.steamId, event.name)
 
+      let serverVisit = new ServerVisit
+
+      serverVisit.playerId = player.id
+      serverVisit.serverId = server.id
+      
+      serverVisit.connectDate = utc()
+      // event.matchGuid
     }
     else if (event instanceof PlayerDeathEvent) {
       /**
@@ -74,9 +84,9 @@ export default abstract class ToQlModel {
        * handled in the PlayerKillEvent section
        */
       if (event.killer == null) {
-        let match = this.getMatch(event.matchGuid)
-        let round = this.getRound(event.round)
-        let victim = this.getPlayer(event.victim.steamId, event.victim.name)
+        let match = await this.getMatch(event.matchGuid)
+        let round = await this.getRound(event.round)
+        let victim = await this.getPlayer(event.victim.steamId, event.victim.name)
 
         let frag = new Frag
 
@@ -119,13 +129,14 @@ export default abstract class ToQlModel {
       }
     }
     else if (event instanceof PlayerDisconnectEvent) {
-
+      let serverVisit = await this.getActiveServerVisit(server.id, event.steamId)
+      serverVisit.disconnectDate = utc()
     }
     else if (event instanceof PlayerKillEvent) {
-      let killer = this.getPlayer(event.killer.steamId, event.killer.name)
-      let match = this.getMatch(event.matchGuid)
-      let round = this.getRound(event.round)
-      let victim = this.getPlayer(event.victim.steamId, event.victim.name)
+      let killer = await this.getPlayer(event.killer.steamId, event.killer.name)
+      let match = await this.getMatch(event.matchGuid)
+      let round = await this.getRound(event.round)
+      let victim = await this.getPlayer(event.victim.steamId, event.victim.name)
 
       let frag = new Frag
 
@@ -192,7 +203,15 @@ export default abstract class ToQlModel {
       frag.victim.weapon = event.victim.weapon
     }
     else if (event instanceof PlayerMedalEvent) {
+      let match = await this.getMatch(event.matchGuid)
+      let player = await this.getPlayer(event.steamId, event.name)
 
+      let medal = new Medal
+
+      medal.matchId = match.id
+      medal.playerId = player.id
+
+      medal.medal = event.medal
     }
     else if (event instanceof PlayerStatsEvent) {
 
@@ -201,23 +220,38 @@ export default abstract class ToQlModel {
 
     }
     else if (event instanceof RoundOverEvent) {
-      let match = this.getMatch(event.matchGuid)
+      let match = await this.getMatch(event.matchGuid)
+      let frags = await this.getFrags(event.matchGuid)
 
       let round = new Round
 
       round.matchId = match.id
+      round.frags = frags
 
       round.round = event.round
       round.teamWon = event.teamWon
       round.time = event.time
       // event.warmup
+
+      // assign frags to round
+      // assign medals to round
+      // assign stats to round
     }
   }
   
-  abstract getFactory(factoryName: string, factoryTitle: string, gameType: GameType): Factory
-  abstract getMatch(matchGuid: string): Match
-  abstract getMap(mapName: string): Map
-  abstract getPlayer(steamId: string, playerName: string): Player
-  abstract getPlayerByName(playerName: string): Player
-  abstract getRound(roundNumber: number): Round | null
+  abstract getActiveServerVisit(serverId: number, steamId: string): Promise<ServerVisit>
+  abstract getFactory(factoryName: string, factoryTitle: string, gameType: GameType): Promise<Factory>
+  abstract getFrags(matchGuid: string): Promise<Frag[]>
+  abstract getMatch(matchGuid: string): Promise<Match>
+  abstract getMap(mapName: string): Promise<Map>
+  abstract getPlayer(steamId: string, playerName: string): Promise<Player>
+  abstract getPlayerByName(playerName: string): Promise<Player>
+  abstract getRound(roundNumber: number): Promise<Round | null>
+  abstract getServer(ip: string, port: number): Promise<Server>
+
+}
+
+function utc(date: Date = new Date): Date {
+  let utc = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), date.getUTCMilliseconds())
+  return new Date(utc)
 }
