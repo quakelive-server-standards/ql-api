@@ -1,12 +1,14 @@
+import GameType from './types/GameType'
+
 export default class MatchStartedEvent {
 
   captureLimit: number
   factory: string
   factoryTitle: string
-  fragLimit: string
-  gameType: string
-  infected: number // maybe boolean?
-  instagib: number // maybe boolean?
+  fragLimit: number
+  gameType: GameType
+  infected: boolean
+  instagib: boolean
   map: string
   matchGuid: string
   mercyLimit: number
@@ -15,12 +17,12 @@ export default class MatchStartedEvent {
     steamId: string
     team: number
   }[]
-  quadHog: number // maybe boolean?
+  quadHog: boolean
   roundLimit: number
   scoreLimit: number
   serverTitle: string
   timeLimit: number
-  training: number // maybe boolean?
+  training: boolean
  
   static fromQl(data: any): MatchStartedEvent {
     let event = new MatchStartedEvent
@@ -29,9 +31,9 @@ export default class MatchStartedEvent {
     event.factory = data['FACTORY']
     event.factoryTitle = data['FACTORY_TITLE']
     event.fragLimit = data['FRAG_LIMIT']
-    event.gameType = data['GAME_TYPE']
-    event.infected = data['INFECTED']
-    event.instagib = data['INSTAGIB']
+    event.gameType = GameType[data['GAME_TYPE']] || data['GAME_TYPE']
+    event.infected = data['INFECTED'] ? true : false
+    event.instagib = data['INSTAGIB'] ? true : false
     event.map = data['MAP']
     event.matchGuid = data['MATCH_GUID']
     event.mercyLimit = data['MERCY_LIMIT']
@@ -47,12 +49,12 @@ export default class MatchStartedEvent {
     }
 
 
-    event.quadHog = data['QUADHOG']
+    event.quadHog = data['QUADHOG'] ? true : false
     event.roundLimit = data['ROUND_LIMIT']
     event.scoreLimit = data['SCORE_LIMIT']
     event.serverTitle = data['SERVER_TITLE']
     event.timeLimit = data['TIME_LIMIT']
-    event.training = data['TRAINING']
+    event.training = data['TRAINING'] ? true : false
     
     return event
   }
