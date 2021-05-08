@@ -201,7 +201,16 @@ export default abstract class ToQlModel {
 
     }
     else if (event instanceof RoundOverEvent) {
+      let match = this.getMatch(event.matchGuid)
 
+      let round = new Round
+
+      round.matchId = match.id
+
+      round.round = event.round
+      round.teamWon = event.teamWon
+      round.time = event.time
+      // event.warmup
     }
   }
   
