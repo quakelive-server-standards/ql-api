@@ -19,7 +19,7 @@ describe('stats/RoundOverEvent', function () {
 
     expect(event.matchGuid).to.equal(ql['DATA']['MATCH_GUID'])
     expect(event.round).to.equal(ql['DATA']['ROUND'])
-    expect(event.teamWon).to.equal(ql['DATA']['TEAM_WON'])
+    expect(event.teamWon).to.equal('Blue')
     expect(event.time).to.equal(ql['DATA']['TIME'])
     expect(event.warmup).to.equal(ql['DATA']['WARMUP'])
   })

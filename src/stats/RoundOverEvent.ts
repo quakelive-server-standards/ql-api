@@ -1,8 +1,10 @@
+import TeamType from './types/TeamType'
+
 export default class RoundOverEvent {
 
   matchGuid: string
   round: number
-  teamWon: string
+  teamWon: TeamType
   time: number
   warmup: boolean
     
@@ -11,7 +13,7 @@ export default class RoundOverEvent {
 
     event.matchGuid = data['MATCH_GUID']
     event.round = data['ROUND']
-    event.teamWon = data['TEAM_WON']
+    event.teamWon = TeamType[data['TEAM_WON']] || data['TEAM_WON']
     event.time = data['TIME']
     event.warmup = data['WARMUP']
 
