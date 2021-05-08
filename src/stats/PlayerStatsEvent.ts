@@ -1,5 +1,10 @@
 import { TeamType } from 'ql-model'
 
+/**
+ * It will be emitted 
+ * - after PlayerDisconnectedEvent
+ * - before MatchReportEvent
+ */
 export default class PlayerStatsEvent {
 
   aborted: boolean // what is this?
@@ -198,7 +203,7 @@ export default class PlayerStatsEvent {
       shots: number
       t: number
     }
-    proximityMine: {
+    proximityLauncher: {
       deaths: number
       damageGiven: number
       damageReceived: number
@@ -420,7 +425,7 @@ export default class PlayerStatsEvent {
         shots: data['WEAPONS']['PLASMA']['S'],
         t: data['WEAPONS']['PLASMA']['T']
       },
-      proximityMine: {
+      proximityLauncher: {
         deaths: data['WEAPONS']['PROXMINE']['D'],
         damageGiven: data['WEAPONS']['PROXMINE']['DG'],
         damageReceived: data['WEAPONS']['PROXMINE']['DR'],

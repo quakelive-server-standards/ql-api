@@ -1,5 +1,5 @@
-import { Cvars, Factory, Frag, FragParticipant, GameType, Map, Match, Medal, Player, Round, Server, ServerVisit } from 'ql-model'
-import { MatchReportEvent, MatchStartedEvent, PlayerConnectEvent, PlayerDeathEvent, PlayerDisconnectEvent, PlayerKillEvent, PlayerMedalEvent, PlayerStatsEvent, PlayerSwitchTeamEvent, RoundOverEvent } from "."
+import { Cvars, Factory, Frag, FragParticipant, GameType, Map, Match, Medal, Player, Round, Server, ServerVisit, Stats } from 'ql-model'
+import { MatchReportEvent, MatchStartedEvent, PlayerConnectEvent, PlayerDeathEvent, PlayerDisconnectEvent, PlayerKillEvent, PlayerMedalEvent, PlayerStatsEvent, PlayerSwitchTeamEvent, RoundOverEvent } from '.'
 
 export default abstract class ToQlModel {
 
@@ -238,7 +238,240 @@ export default abstract class ToQlModel {
       }
     }
     else if (event instanceof PlayerStatsEvent) {
+      let match = await this.getMatch(event.matchGuid)
 
+      if (match) {
+        let player = await this.createOrGetPlayer(event.steamId, event.name)
+
+        let stats = new Stats
+
+        stats.matchId = match.id
+        stats.playerId = player.id
+  
+        stats.aborted = event.aborted
+        stats.blueFlagPickups = event.blueFlagPickups
+        stats.deaths = event.deaths
+        stats.holyShits = event.holyShits
+        stats.kills = event.kills
+        // event.lose
+        stats.maxStreak = event.maxStreak
+        // event.model
+        stats.neutralFlagPickups = event.neutralFlagPickups
+        stats.playTime = event.playTime
+        // event.quit
+        stats.rank = event.rank
+        stats.redFlagPickups = event.redFlagPickups
+        stats.score = event.score
+        // event.team
+        stats.teamJoinTime = event.teamJoinTime
+        stats.teamRank = event.teamRank
+        stats.tiedRank = event.tiedRank
+        stats.tiedTeamRank = event.tiedTeamRank
+        // event.warmup
+        // event.win
+        stats.damageDealt = event.damage.dealt
+        stats.damageTaken = event.damage.taken
+        
+        stats.medals = {
+          accuracy: event.medals.accuracy,
+          assists: event.medals.assists,
+          captures: event.medals.captures,
+          comboKill: event.medals.comboKill,
+          defends: event.medals.defends,
+          excellent: event.medals.excellent,
+          firstFrag: event.medals.firstFrag,
+          headshot: event.medals.headshot,
+          humiliation: event.medals.humiliation,
+          impressive: event.medals.impressive,
+          midair: event.medals.midair,
+          perfect: event.medals.perfect,
+          perforated: event.medals.perforated,
+          quadGod: event.medals.quadGod,
+          rampage: event.medals.rampage,
+          revenge: event.medals.revenge
+        }
+
+        stats.pickups = {
+          ammo: event.pickups.ammo,
+          armor: event.pickups.armor,
+          armorRegeneration: event.pickups.armorRegeneration,
+          battleSuit: event.pickups.battleSuit,
+          doubler: event.pickups.doubler,
+          flight: event.pickups.flight,
+          greenArmor: event.pickups.greenArmor,
+          guard: event.pickups.guard,
+          haste: event.pickups.haste,
+          health: event.pickups.health,
+          invisibility: event.pickups.invisibility,
+          invulnerability: event.pickups.invulnerability,
+          kamikaze: event.pickups.kamikaze,
+          medKit: event.pickups.medKit,
+          megaHealth: event.pickups.megaHealth,
+          otherHoldable: event.pickups.otherHoldable,
+          otherPowerUp: event.pickups.otherPowerUp,
+          portal: event.pickups.portal,
+          quadDamage: event.pickups.quadDamage,
+          redArmor: event.pickups.redArmor,
+          regeneration: event.pickups.regeneration,
+          scout: event.pickups.scout,
+          teleporter: event.pickups.teleporter,
+          yellowArmor: event.pickups.yellowArmor,
+        }
+
+        stats.bfg = {
+          deaths: event.weapons.bfg.deaths,
+          damageGiven: event.weapons.bfg.damageGiven,
+          damageReceived: event.weapons.bfg.damageReceived,
+          hits: event.weapons.bfg.hits,
+          kills: event.weapons.bfg.kills,
+          p: event.weapons.bfg.p,
+          shots: event.weapons.bfg.shots,
+          t: event.weapons.bfg.t
+        }
+
+        stats.chainGun = {
+          deaths: event.weapons.chainGun.deaths,
+          damageGiven: event.weapons.chainGun.damageGiven,
+          damageReceived: event.weapons.chainGun.damageReceived,
+          hits: event.weapons.chainGun.hits,
+          kills: event.weapons.chainGun.kills,
+          p: event.weapons.chainGun.p,
+          shots: event.weapons.chainGun.shots,
+          t: event.weapons.chainGun.t
+        }
+
+        stats.gauntlet = {
+          deaths: event.weapons.gauntlet.deaths,
+          damageGiven: event.weapons.gauntlet.damageGiven,
+          damageReceived: event.weapons.gauntlet.damageReceived,
+          hits: event.weapons.gauntlet.hits,
+          kills: event.weapons.gauntlet.kills,
+          p: event.weapons.gauntlet.p,
+          shots: event.weapons.gauntlet.shots,
+          t: event.weapons.gauntlet.t
+        }
+
+        stats.grenadeLauncher = {
+          deaths: event.weapons.grenadeLauncher.deaths,
+          damageGiven: event.weapons.grenadeLauncher.damageGiven,
+          damageReceived: event.weapons.grenadeLauncher.damageReceived,
+          hits: event.weapons.grenadeLauncher.hits,
+          kills: event.weapons.grenadeLauncher.kills,
+          p: event.weapons.grenadeLauncher.p,
+          shots: event.weapons.grenadeLauncher.shots,
+          t: event.weapons.grenadeLauncher.t
+        }
+
+        stats.heavyMachineGun = {
+          deaths: event.weapons.heavyMachineGun.deaths,
+          damageGiven: event.weapons.heavyMachineGun.damageGiven,
+          damageReceived: event.weapons.heavyMachineGun.damageReceived,
+          hits: event.weapons.heavyMachineGun.hits,
+          kills: event.weapons.heavyMachineGun.kills,
+          p: event.weapons.heavyMachineGun.p,
+          shots: event.weapons.heavyMachineGun.shots,
+          t: event.weapons.heavyMachineGun.t
+        }
+
+        stats.lightningGun = {
+          deaths: event.weapons.lightningGun.deaths,
+          damageGiven: event.weapons.lightningGun.damageGiven,
+          damageReceived: event.weapons.lightningGun.damageReceived,
+          hits: event.weapons.lightningGun.hits,
+          kills: event.weapons.lightningGun.kills,
+          p: event.weapons.lightningGun.p,
+          shots: event.weapons.lightningGun.shots,
+          t: event.weapons.lightningGun.t
+        }
+
+        stats.machineGun = {
+          deaths: event.weapons.machineGun.deaths,
+          damageGiven: event.weapons.machineGun.damageGiven,
+          damageReceived: event.weapons.machineGun.damageReceived,
+          hits: event.weapons.machineGun.hits,
+          kills: event.weapons.machineGun.kills,
+          p: event.weapons.machineGun.p,
+          shots: event.weapons.machineGun.shots,
+          t: event.weapons.machineGun.t
+        }
+
+        stats.nailGun = {
+          deaths: event.weapons.nailGun.deaths,
+          damageGiven: event.weapons.nailGun.damageGiven,
+          damageReceived: event.weapons.nailGun.damageReceived,
+          hits: event.weapons.nailGun.hits,
+          kills: event.weapons.nailGun.kills,
+          p: event.weapons.nailGun.p,
+          shots: event.weapons.nailGun.shots,
+          t: event.weapons.nailGun.t
+        }
+
+        stats.otherWeapon = {
+          deaths: event.weapons.otherWeapon.deaths,
+          damageGiven: event.weapons.otherWeapon.damageGiven,
+          damageReceived: event.weapons.otherWeapon.damageReceived,
+          hits: event.weapons.otherWeapon.hits,
+          kills: event.weapons.otherWeapon.kills,
+          p: event.weapons.otherWeapon.p,
+          shots: event.weapons.otherWeapon.shots,
+          t: event.weapons.otherWeapon.t
+        }
+
+        stats.plasmaGun = {
+          deaths: event.weapons.plasmaGun.deaths,
+          damageGiven: event.weapons.plasmaGun.damageGiven,
+          damageReceived: event.weapons.plasmaGun.damageReceived,
+          hits: event.weapons.plasmaGun.hits,
+          kills: event.weapons.plasmaGun.kills,
+          p: event.weapons.plasmaGun.p,
+          shots: event.weapons.plasmaGun.shots,
+          t: event.weapons.plasmaGun.t
+        }
+
+        stats.proximityLauncher = {
+          deaths: event.weapons.proximityLauncher.deaths,
+          damageGiven: event.weapons.proximityLauncher.damageGiven,
+          damageReceived: event.weapons.proximityLauncher.damageReceived,
+          hits: event.weapons.proximityLauncher.hits,
+          kills: event.weapons.proximityLauncher.kills,
+          p: event.weapons.proximityLauncher.p,
+          shots: event.weapons.proximityLauncher.shots,
+          t: event.weapons.proximityLauncher.t
+        }
+
+        stats.railgun = {
+          deaths: event.weapons.railgun.deaths,
+          damageGiven: event.weapons.railgun.damageGiven,
+          damageReceived: event.weapons.railgun.damageReceived,
+          hits: event.weapons.railgun.hits,
+          kills: event.weapons.railgun.kills,
+          p: event.weapons.railgun.p,
+          shots: event.weapons.railgun.shots,
+          t: event.weapons.railgun.t
+        }
+
+        stats.rocketLauncher = {
+          deaths: event.weapons.rocketLauncher.deaths,
+          damageGiven: event.weapons.rocketLauncher.damageGiven,
+          damageReceived: event.weapons.rocketLauncher.damageReceived,
+          hits: event.weapons.rocketLauncher.hits,
+          kills: event.weapons.rocketLauncher.kills,
+          p: event.weapons.rocketLauncher.p,
+          shots: event.weapons.rocketLauncher.shots,
+          t: event.weapons.rocketLauncher.t
+        }
+
+        stats.shotgun = {
+          deaths: event.weapons.shotgun.deaths,
+          damageGiven: event.weapons.shotgun.damageGiven,
+          damageReceived: event.weapons.shotgun.damageReceived,
+          hits: event.weapons.shotgun.hits,
+          kills: event.weapons.shotgun.kills,
+          p: event.weapons.shotgun.p,
+          shots: event.weapons.shotgun.shots,
+          t: event.weapons.shotgun.t
+        }
+      }
     }
     else if (event instanceof PlayerSwitchTeamEvent) {
 
