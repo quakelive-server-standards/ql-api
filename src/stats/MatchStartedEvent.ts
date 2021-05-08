@@ -1,4 +1,5 @@
 import GameType from './types/GameType'
+import TeamType from './types/TeamType'
 
 export default class MatchStartedEvent {
 
@@ -15,7 +16,7 @@ export default class MatchStartedEvent {
   players: {
     name: string
     steamId: string
-    team: number
+    team: TeamType
   }[]
   quadHog: boolean
   roundLimit: number
@@ -44,7 +45,7 @@ export default class MatchStartedEvent {
       event.players.push({
         name: player['NAME'],
         steamId: player['STEAM_ID'],
-        team: player['TEAM']
+        team: player['TEAM'] == 0 ? TeamType['FREE'] : player['TEAM'] == 1 ? TeamType['RED'] : TeamType['BLUE']
       })
     }
 

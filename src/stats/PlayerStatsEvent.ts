@@ -1,3 +1,5 @@
+import TeamType from "./types/TeamType"
+
 export default class PlayerStatsEvent {
 
   aborted: boolean // what is this?
@@ -26,7 +28,7 @@ export default class PlayerStatsEvent {
   redFlagPickups: number
   score: number
   steamId: string
-  team: number
+  team: TeamType
   teamJoinTime: number
   teamRank: number
   tiedRank: number
@@ -252,7 +254,7 @@ export default class PlayerStatsEvent {
     event.redFlagPickups = data['RED_FLAG_PICKUPS'] ? data['RED_FLAG_PICKUPS'] : 0
     event.score = data['SCORE']
     event.steamId = data['STEAM_ID']
-    event.team = data['TEAM'] ? data['TEAM'] : 0
+    event.team = data['TEAM'] == 1 ? TeamType['RED'] : data['TEAM'] == 2 ? TeamType['BLUE'] : TeamType['FREE']
     event.teamJoinTime = data['TEAM_JOIN_TIME'] != null ? data['TEAM_JOIN_TIME'] : -1
     event.teamRank = data['TEAM_RANK'] ? data['TEAM_RANK'] : -1
     event.tiedRank = data['TIED_RANK']

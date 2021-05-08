@@ -1,6 +1,7 @@
 import HoldableType from './types/HoldableType'
 import ModType from './types/ModType'
 import PowerUpType from './types/PowerUpType'
+import TeamType from './types/TeamType'
 import WeaponType from './types/WeaponType'
 
 export default class PlayerKillEvent {
@@ -35,7 +36,7 @@ export default class PlayerKillEvent {
     speed: number
     steamId: string
     submerged: boolean
-    team: number // might be of type TeamType?
+    team: TeamType
     view: {
       x: number
       y: number
@@ -63,7 +64,7 @@ export default class PlayerKillEvent {
     steamId: string
     streak: number
     submerged: boolean
-    team: number // might be of type TeamType?
+    team: TeamType
     view: {
       x: number
       y: number
@@ -105,7 +106,7 @@ export default class PlayerKillEvent {
       speed: data['KILLER']['SPEED'],
       steamId: data['KILLER']['STEAM_ID'],
       submerged: data['KILLER']['SUBMERGED'],
-      team: data['KILLER']['TEAM'],
+      team: data['KILLER']['TEAM'] == 0 ? TeamType['FREE'] : data['KILLER']['TEAM'] == 1 ? TeamType['RED'] : TeamType['BLUE'],
       view: {
         x: data['KILLER']['VIEW']['X'],
         y: data['KILLER']['VIEW']['Y'],
@@ -133,7 +134,7 @@ export default class PlayerKillEvent {
       steamId: data['VICTIM']['STEAM_ID'],
       streak: data['VICTIM']['STREAK'],
       submerged: data['VICTIM']['SUBMERGED'],
-      team: data['VICTIM']['TEAM'],
+      team: data['VICTIM']['TEAM'] == 0 ? TeamType['FREE'] : data['VICTIM']['TEAM'] == 1 ? TeamType['RED'] : TeamType['BLUE'],
       view: {
         x: data['VICTIM']['VIEW']['X'],
         y: data['VICTIM']['VIEW']['Y'],

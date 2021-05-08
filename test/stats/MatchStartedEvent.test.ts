@@ -53,10 +53,10 @@ describe('stats/MatchStartedEvent', function () {
 
     expect(event.players[0].name).to.equal(ql['DATA']['PLAYERS'][0]['NAME'])
     expect(event.players[0].steamId).to.equal(ql['DATA']['PLAYERS'][0]['STEAM_ID'])
-    expect(event.players[0].team).to.equal(ql['DATA']['PLAYERS'][0]['TEAM'])
+    expect(event.players[0].team).to.equal('Free')
     expect(event.players[1].name).to.equal(ql['DATA']['PLAYERS'][1]['NAME'])
     expect(event.players[1].steamId).to.equal(ql['DATA']['PLAYERS'][1]['STEAM_ID'])
-    expect(event.players[1].team).to.equal(ql['DATA']['PLAYERS'][1]['TEAM'])
+    expect(event.players[1].team).to.equal('Free')
 
     expect(event.quadHog).to.equal(false)
     expect(event.roundLimit).to.equal(ql['DATA']['ROUND_LIMIT'])
