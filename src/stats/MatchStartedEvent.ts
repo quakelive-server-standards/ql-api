@@ -1,5 +1,5 @@
-import GameType from './types/GameType'
-import TeamType from './types/TeamType'
+import { GameType, TeamType } from 'ql-model'
+import { GameTypeMapping } from './typeMappings/GameTypeMapping'
 
 export default class MatchStartedEvent {
 
@@ -32,7 +32,7 @@ export default class MatchStartedEvent {
     event.factory = data['FACTORY']
     event.factoryTitle = data['FACTORY_TITLE']
     event.fragLimit = data['FRAG_LIMIT']
-    event.gameType = GameType[data['GAME_TYPE']] || data['GAME_TYPE']
+    event.gameType = GameTypeMapping[data['GAME_TYPE']] || data['GAME_TYPE']
     event.infected = data['INFECTED'] ? true : false
     event.instagib = data['INSTAGIB'] ? true : false
     event.map = data['MAP']
@@ -45,7 +45,7 @@ export default class MatchStartedEvent {
       event.players.push({
         name: player['NAME'],
         steamId: player['STEAM_ID'],
-        team: player['TEAM'] == 0 ? TeamType['FREE'] : player['TEAM'] == 1 ? TeamType['RED'] : TeamType['BLUE']
+        team: player['TEAM'] == 0 ? TeamType.Free : player['TEAM'] == 1 ? TeamType.Red : TeamType.Blue
       })
     }
 

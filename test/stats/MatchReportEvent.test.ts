@@ -1,7 +1,6 @@
 import { expect } from 'chai'
 import 'mocha'
 import MatchReportEvent from '../../src/stats/MatchReportEvent'
-import GameType from '../../src/stats/types/GameType'
 
 describe('stats/MatchReportEvent', function() {
   it('should create an object out of the QL event', function() {

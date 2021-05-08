@@ -1,4 +1,4 @@
-import TeamType from "./types/TeamType"
+import { TeamType } from 'ql-model'
 
 export default class PlayerStatsEvent {
 
@@ -6,6 +6,12 @@ export default class PlayerStatsEvent {
   blueFlagPickups: number
   deaths: number
   holyShits: number
+  itemTimings: {
+    greenArmor: number
+    megaHealth: number
+    redArmor: number
+    yellowArmor: number
+  }
   kills: number
   
   /**
@@ -254,7 +260,7 @@ export default class PlayerStatsEvent {
     event.redFlagPickups = data['RED_FLAG_PICKUPS'] ? data['RED_FLAG_PICKUPS'] : 0
     event.score = data['SCORE']
     event.steamId = data['STEAM_ID']
-    event.team = data['TEAM'] == 1 ? TeamType['RED'] : data['TEAM'] == 2 ? TeamType['BLUE'] : TeamType['FREE']
+    event.team = data['TEAM'] == 1 ? TeamType.Red : data['TEAM'] == 2 ? TeamType.Blue : TeamType.Free
     event.teamJoinTime = data['TEAM_JOIN_TIME'] != null ? data['TEAM_JOIN_TIME'] : -1
     event.teamRank = data['TEAM_RANK'] ? data['TEAM_RANK'] : -1
     event.tiedRank = data['TIED_RANK']

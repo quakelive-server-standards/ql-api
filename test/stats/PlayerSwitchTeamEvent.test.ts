@@ -1,9 +1,8 @@
 import { expect } from 'chai'
 import 'mocha'
 import PlayerSwitchTeamEvent from '../../src/stats/PlayerSwitchTeamEvent'
-import TeamType from '../../src/stats/types/TeamType'
 
-describe('stats/PlayerStatsEvent', function() {
+describe('stats/PlayerSwitchTeamEvent', function() {
   it('should create an object out of the QL event', function() {
     let ql = {
       "DATA" : {
@@ -24,8 +23,8 @@ describe('stats/PlayerStatsEvent', function() {
 
     expect(event.matchGuid).to.equal(ql['DATA']['MATCH_GUID'])
     expect(event.name).to.equal(ql['DATA']['KILLER']['NAME'])
-    expect(event.newTeam).to.equal(TeamType[ql['DATA']['KILLER']['TEAM']])
-    expect(event.oldTeam).to.equal(TeamType[ql['DATA']['KILLER']['OLD_TEAM']])
+    expect(event.newTeam).to.equal('Spectator')
+    expect(event.oldTeam).to.equal('Free')
     expect(event.steamId).to.equal(ql['DATA']['KILLER']['STEAM_ID'])
     expect(event.time).to.equal(ql['DATA']['TIME'])
     expect(event.warmup).to.equal(ql['DATA']['WARMUP'])

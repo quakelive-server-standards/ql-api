@@ -1,6 +1,5 @@
-import { Cvars, Factory, Frag, FragParticipant, Map, Match, Medal, Player, Round, Server, ServerVisit } from 'ql-model'
+import { Cvars, Factory, Frag, FragParticipant, GameType, Map, Match, Medal, Player, Round, Server, ServerVisit } from 'ql-model'
 import { MatchReportEvent, MatchStartedEvent, PlayerConnectEvent, PlayerDeathEvent, PlayerDisconnectEvent, PlayerKillEvent, PlayerMedalEvent, PlayerStatsEvent, PlayerSwitchTeamEvent, RoundOverEvent } from "."
-import GameType from './stats/types/GameType'
 
 export default abstract class ToQlModel {
 

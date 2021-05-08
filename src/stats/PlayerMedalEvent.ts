@@ -1,4 +1,5 @@
-import MedalType from './types/MedalType'
+import { MedalType } from 'ql-model'
+import { MedalTypeMapping } from './typeMappings/MedalTypeMapping'
 
 export default class PlayerMedalEvent {
 
@@ -14,7 +15,7 @@ export default class PlayerMedalEvent {
     let event = new PlayerMedalEvent
 
     event.matchGuid = data['MATCH_GUID']
-    event.medal = MedalType[data['MEDAL']] || data['MEDAL']
+    event.medal = MedalTypeMapping[data['MEDAL']] || data['MEDAL']
     event.name = data['NAME']
     event.steamId = data['STEAM_ID']
     event.time = data['TIME']

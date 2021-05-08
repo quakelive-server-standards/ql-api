@@ -1,4 +1,5 @@
-import TeamType from './types/TeamType'
+import { TeamType } from 'ql-model'
+import { TeamTypeMapping } from './typeMappings/TeamTypeMapping'
 
 export default class RoundOverEvent {
 
@@ -13,7 +14,7 @@ export default class RoundOverEvent {
 
     event.matchGuid = data['MATCH_GUID']
     event.round = data['ROUND']
-    event.teamWon = TeamType[data['TEAM_WON']] || data['TEAM_WON']
+    event.teamWon = TeamTypeMapping[data['TEAM_WON']] || data['TEAM_WON']
     event.time = data['TIME']
     event.warmup = data['WARMUP']
 

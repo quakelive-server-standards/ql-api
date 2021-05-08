@@ -1,4 +1,5 @@
-import GameType from './types/GameType'
+import { GameType } from 'ql-model'
+import { GameTypeMapping } from './typeMappings/GameTypeMapping'
 
 export default class MatchReport {
   
@@ -40,7 +41,7 @@ export default class MatchReport {
     event.firstScorer = data['FIRST_SCORER'] == 'none' ? null : data['FIRST_SCORER']
     event.fragLimit = data['FRAG_LIMIT']
     event.gameLength = data['GAME_LENGTH']
-    event.gameType = GameType[data['GAME_TYPE']] || data['GAME_TYPE']
+    event.gameType = GameTypeMapping[data['GAME_TYPE']] || data['GAME_TYPE']
     event.infected = data['INFECTED'] ? true : false
     event.instagib = data['INSTAGIB'] ? true : false
     event.lastLeadChangeTime = data['LAST_LEAD_CHANGE_TIME']

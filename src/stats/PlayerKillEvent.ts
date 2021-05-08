@@ -1,14 +1,13 @@
-import HoldableType from './types/HoldableType'
-import ModType from './types/ModType'
-import PowerUpType from './types/PowerUpType'
-import TeamType from './types/TeamType'
-import WeaponType from './types/WeaponType'
+import { HoldableType, PowerUpType, ReasonType, TeamType, WeaponType } from 'ql-model'
+import { HoldableTypeMapping } from './typeMappings/HoldableTypeMapping'
+import { PowerUpTypeMapping } from './typeMappings/PowerUpTypeMapping'
+import { WeaponTypeMapping } from './typeMappings/WeaponTypeMapping'
 
 export default class PlayerKillEvent {
 
   matchGuid: string
   time: number
-  mod: ModType // what is this translated?
+  mod: ReasonType // what is this translated?
   otherTeamAlive: number | null
   otherTeamDead: number | null
   round: number | null
@@ -95,24 +94,24 @@ export default class PlayerKillEvent {
       bot: data['KILLER']['BOT'],
       botSkill: data['KILLER']['BOT_SKILL'],
       health: data['KILLER']['HEALTH'],
-      holdable: HoldableType[data['KILLER']['HOLDABLE']] || data['KILLER']['HOLDABLE'],
+      holdable: HoldableTypeMapping[data['KILLER']['HOLDABLE']] || data['KILLER']['HOLDABLE'],
       name: data['KILLER']['NAME'],
       position: {
         x: data['KILLER']['POSITION']['X'],
         y: data['KILLER']['POSITION']['Y'],
         z: data['KILLER']['POSITION']['Z']
       },
-      powerUps: data['KILLER']['POWERUPS'] instanceof Array ? data['KILLER']['POWERUPS'].map(powerUp => PowerUpType[powerUp] || powerUp) : null,
+      powerUps: data['KILLER']['POWERUPS'] instanceof Array ? data['KILLER']['POWERUPS'].map(powerUp => PowerUpTypeMapping[powerUp] || powerUp) : null,
       speed: data['KILLER']['SPEED'],
       steamId: data['KILLER']['STEAM_ID'],
       submerged: data['KILLER']['SUBMERGED'],
-      team: data['KILLER']['TEAM'] == 0 ? TeamType['FREE'] : data['KILLER']['TEAM'] == 1 ? TeamType['RED'] : TeamType['BLUE'],
+      team: data['KILLER']['TEAM'] == 0 ? TeamType.Free : data['KILLER']['TEAM'] == 1 ? TeamType.Red : TeamType.Blue,
       view: {
         x: data['KILLER']['VIEW']['X'],
         y: data['KILLER']['VIEW']['Y'],
         z: data['KILLER']['VIEW']['Z']
       },
-      weapon: WeaponType[data['KILLER']['WEAPON']] || data['KILLER']['WEAPON']
+      weapon: WeaponTypeMapping[data['KILLER']['WEAPON']] || data['KILLER']['WEAPON']
     }
   
     event.victim = {
@@ -122,25 +121,25 @@ export default class PlayerKillEvent {
       bot: data['VICTIM']['BOT'],
       botSkill: data['VICTIM']['BOT_SKILL'],
       health: data['VICTIM']['HEALTH'],
-      holdable: HoldableType[data['VICTIM']['HOLDABLE']] || data['VICTIM']['HOLDABLE'],
+      holdable: HoldableTypeMapping[data['VICTIM']['HOLDABLE']] || data['VICTIM']['HOLDABLE'],
       name: data['VICTIM']['NAME'],
       position: {
         x: data['VICTIM']['POSITION']['X'],
         y: data['VICTIM']['POSITION']['Y'],
         z: data['VICTIM']['POSITION']['Z']
       },
-      powerUps: data['VICTIM']['POWERUPS'] instanceof Array ? data['VICTIM']['POWERUPS'].map(powerUp => PowerUpType[powerUp] || powerUp) : null,
+      powerUps: data['VICTIM']['POWERUPS'] instanceof Array ? data['VICTIM']['POWERUPS'].map(powerUp => PowerUpTypeMapping[powerUp] || powerUp) : null,
       speed: data['VICTIM']['SPEED'],
       steamId: data['VICTIM']['STEAM_ID'],
       streak: data['VICTIM']['STREAK'],
       submerged: data['VICTIM']['SUBMERGED'],
-      team: data['VICTIM']['TEAM'] == 0 ? TeamType['FREE'] : data['VICTIM']['TEAM'] == 1 ? TeamType['RED'] : TeamType['BLUE'],
+      team: data['VICTIM']['TEAM'] == 0 ? TeamType.Free : data['VICTIM']['TEAM'] == 1 ? TeamType.Red : TeamType.Blue,
       view: {
         x: data['VICTIM']['VIEW']['X'],
         y: data['VICTIM']['VIEW']['Y'],
         z: data['VICTIM']['VIEW']['Z']
       },
-      weapon: WeaponType[data['VICTIM']['WEAPON']] || data['VICTIM']['WEAPON']
+      weapon: WeaponTypeMapping[data['VICTIM']['WEAPON']] || data['VICTIM']['WEAPON']
     }
  
     return event
