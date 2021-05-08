@@ -5,7 +5,7 @@ enum MedalType {
   COMBOKILL = 'Combo Kill',
   DEFENDS = 'Defends',
   EXCELLENT = 'Excellent',
-  FIRSTFRAGE = 'First Frag',
+  FIRSTFRAG = 'First Frag',
   HEADSHOT = 'Headshot',
   HUMILIATION = 'Humiliation',
   IMPRESSIVE = 'Impressive',

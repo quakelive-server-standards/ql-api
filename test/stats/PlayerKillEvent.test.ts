@@ -1,8 +1,6 @@
 import { expect } from 'chai'
 import 'mocha'
 import PlayerKillEvent from '../../src/stats/PlayerKillEvent'
-import HoldableType from '../../src/stats/types/HoldableType'
-import WeaponType from '../../src/stats/types/WeaponType'
 
 describe('stats/PlayerKillEvent', function() {
   it('should create an object out of the QL event', function() {
@@ -84,7 +82,7 @@ describe('stats/PlayerKillEvent', function() {
     expect(event.killer.bot).to.equal(ql['DATA']['KILLER']['BOT'])
     expect(event.killer.botSkill).to.equal(ql['DATA']['KILLER']['BOT_SKILL'])
     expect(event.killer.health).to.equal(ql['DATA']['KILLER']['HEALTH'])
-    expect(event.killer.holdable).to.equal(HoldableType[ql['DATA']['KILLER']['HOLDABLE']] || ql['DATA']['KILLER']['HOLDABLE'])
+    expect(event.killer.holdable).to.equal(ql['DATA']['KILLER']['HOLDABLE'])
     expect(event.killer.name).to.equal(ql['DATA']['KILLER']['NAME'])
 
     expect(event.killer.position.x).to.equal(ql['DATA']['KILLER']['POSITION']['X'])
@@ -101,7 +99,7 @@ describe('stats/PlayerKillEvent', function() {
     expect(event.killer.view.y).to.equal(ql['DATA']['KILLER']['VIEW']['Y'])
     expect(event.killer.view.z).to.equal(ql['DATA']['KILLER']['VIEW']['Z'])
 
-    expect(event.killer.weapon).to.equal(WeaponType[ql['DATA']['KILLER']['WEAPON']] || ql['DATA']['KILLER']['WEAPON'])
+    expect(event.killer.weapon).to.equal('Other weapon')
 
     expect(event.matchGuid).to.equal(ql['DATA']['MATCH_GUID'])
     expect(event.mod).to.equal(ql['DATA']['MOD'])
@@ -120,7 +118,7 @@ describe('stats/PlayerKillEvent', function() {
     expect(event.victim.bot).to.equal(ql['DATA']['VICTIM']['BOT'])
     expect(event.victim.botSkill).to.equal(ql['DATA']['VICTIM']['BOT_SKILL'])
     expect(event.victim.health).to.equal(ql['DATA']['VICTIM']['HEALTH'])
-    expect(event.victim.holdable).to.equal(HoldableType[ql['DATA']['VICTIM']['HOLDABLE']] ||ql['DATA']['VICTIM']['HOLDABLE'])
+    expect(event.victim.holdable).to.equal(ql['DATA']['VICTIM']['HOLDABLE'])
     expect(event.victim.name).to.equal(ql['DATA']['VICTIM']['NAME'])
 
     expect(event.victim.position.x).to.equal(ql['DATA']['VICTIM']['POSITION']['X'])
@@ -137,7 +135,7 @@ describe('stats/PlayerKillEvent', function() {
     expect(event.victim.view.y).to.equal(ql['DATA']['VICTIM']['VIEW']['Y'])
     expect(event.victim.view.z).to.equal(ql['DATA']['VICTIM']['VIEW']['Z'])
 
-    expect(event.victim.weapon).to.equal(WeaponType[ql['DATA']['VICTIM']['WEAPON']] || ql['DATA']['VICTIM']['WEAPON'])
+    expect(event.victim.weapon).to.equal('Rocket Launcher')
 
     expect(event.warmup).to.equal(ql['DATA']['WARMUP'])
   })

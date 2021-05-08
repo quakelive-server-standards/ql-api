@@ -47,7 +47,7 @@ describe('stats/MatchReportEvent', function() {
     expect(event.firstScorer).to.equal(ql['DATA']['FIRST_SCORER'])
     expect(event.fragLimit).to.equal(ql['DATA']['FRAG_LIMIT'])
     expect(event.gameLength).to.equal(ql['DATA']['GAME_LENGTH'])
-    expect(event.gameType).to.equal(GameType[ql['DATA']['GAME_TYPE']])
+    expect(event.gameType).to.equal('Duel')
     expect(event.infected).to.equal(ql['DATA']['INFECTED'])
     expect(event.instagib).to.equal(ql['DATA']['INSTAGIB'])
     expect(event.lastLeadChangeTime).to.equal(ql['DATA']['LAST_LEAD_CHANGE_TIME'])
