@@ -90,25 +90,108 @@ export default abstract class ToQlModel {
        */
       if (event.killer == null) {
         let match = await this.getMatch(event.matchGuid)
-        let round = await this.getRound(event.matchGuid, event.round)
+
+        if (match) {
+          let victim = await this.createOrGetPlayer(event.victim.steamId, event.victim.name)
+
+          let frag = new Frag
+  
+          frag.killer = null
+          frag.matchId = match.id
+          frag.victim = new FragParticipant
+          frag.victim.playerId = victim.id
+  
+          frag.reason = event.mod
+          frag.otherTeamAlive = event.otherTeamAlive
+          frag.otherTeamDead = event.otherTeamDead
+          frag.suicide = event.suicide
+          // event.teamKill
+          frag.teamAlive = event.teamAlive
+          frag.teamDead = event.teamDead
+          frag.time = event.time
+          // event.warmup
+          frag.victim.airborne = event.victim.airborne
+          frag.victim.ammo = event.victim.ammo
+          frag.victim.armor = event.victim.armor
+          frag.victim.bot = event.victim.bot
+          frag.victim.botSkill = event.victim.botSkill
+          frag.victim.health = event.victim.health
+          frag.victim.holdable = event.victim.holdable
+          frag.victim.position = {
+            x: event.victim.position.x,
+            y: event.victim.position.y,
+            z: event.victim.position.z
+          }
+          frag.victim.powerUps = event.victim.powerUps
+          frag.victim.speed = event.victim.speed
+          // event.victim.submerged
+          frag.victim.team = event.victim.team
+          frag.victim.view = {
+            x: event.victim.view.x,
+            y: event.victim.view.y,
+            z: event.victim.view.z
+          }
+          frag.victim.weapon = event.victim.weapon
+  
+          await this.createFrag(frag)  
+        }
+      }
+    }
+    else if (event instanceof PlayerDisconnectEvent) {
+      let serverVisit = await this.getActiveServerVisit(server.id, event.steamId)
+
+      if (serverVisit) {
+        serverVisit.disconnectDate = utc()
+        await this.updateServerVisit(serverVisit)
+      }
+    }
+    else if (event instanceof PlayerKillEvent) {
+      let match = await this.getMatch(event.matchGuid)
+
+      if (match) {
+        let killer = await this.createOrGetPlayer(event.killer.steamId, event.killer.name)
         let victim = await this.createOrGetPlayer(event.victim.steamId, event.victim.name)
-
+  
         let frag = new Frag
-
-        frag.killer = null
+  
+        frag.killer = new FragParticipant
+        frag.killer.playerId = killer.id
         frag.matchId = match.id
-        frag.roundId = round ? round.id : null
         frag.victim = new FragParticipant
         frag.victim.playerId = victim.id
-
+  
         frag.otherTeamAlive = event.otherTeamAlive
         frag.otherTeamDead = event.otherTeamDead
         frag.suicide = event.suicide
-        frag.teamkill = event.teamKill
+        // event.teamKill
         frag.teamAlive = event.teamAlive
         frag.teamDead = event.teamDead
         frag.time = event.time
         // event.warmup
+  
+        frag.killer.airborne = event.killer.airborne
+        frag.killer.ammo = event.killer.ammo
+        frag.killer.armor = event.killer.armor
+        frag.killer.bot = event.killer.bot
+        frag.killer.botSkill = event.killer.botSkill
+        frag.killer.health = event.killer.health
+        frag.killer.holdable = event.killer.holdable
+        frag.killer.position = {
+          x: event.killer.position.x,
+          y: event.killer.position.y,
+          z: event.killer.position.z
+        }
+        frag.killer.powerUps = event.killer.powerUps
+        frag.killer.speed = event.killer.speed
+        // event.killer.submerged
+        frag.killer.team = event.killer.team
+        frag.killer.view = {
+          x: event.killer.view.x,
+          y: event.killer.view.y,
+          z: event.killer.view.z
+        }
+        frag.killer.weapon = event.killer.weapon
+  
         frag.victim.airborne = event.victim.airborne
         frag.victim.ammo = event.victim.ammo
         frag.victim.armor = event.victim.armor
@@ -131,98 +214,25 @@ export default abstract class ToQlModel {
           z: event.victim.view.z
         }
         frag.victim.weapon = event.victim.weapon
-
-        await this.createFrag(frag)
+  
+        await this.createFrag(frag)  
       }
-    }
-    else if (event instanceof PlayerDisconnectEvent) {
-      let serverVisit = await this.getActiveServerVisit(server.id, event.steamId)
-      serverVisit.disconnectDate = utc()
-    }
-    else if (event instanceof PlayerKillEvent) {
-      let killer = await this.createOrGetPlayer(event.killer.steamId, event.killer.name)
-      let match = await this.getMatch(event.matchGuid)
-      let round = await this.getRound(event.matchGuid, event.round)
-      let victim = await this.createOrGetPlayer(event.victim.steamId, event.victim.name)
-
-      let frag = new Frag
-
-      frag.killer = new FragParticipant
-      frag.killer.playerId = killer.id
-      frag.matchId = match.id
-      frag.roundId = round ? round.id : null
-      frag.victim = new FragParticipant
-      frag.victim.playerId = victim.id
-
-      frag.otherTeamAlive = event.otherTeamAlive
-      frag.otherTeamDead = event.otherTeamDead
-      frag.suicide = event.suicide
-      frag.teamkill = event.teamKill
-      frag.teamAlive = event.teamAlive
-      frag.teamDead = event.teamDead
-      frag.time = event.time
-      // event.warmup
-
-      frag.killer.airborne = event.killer.airborne
-      frag.killer.ammo = event.killer.ammo
-      frag.killer.armor = event.killer.armor
-      frag.killer.bot = event.killer.bot
-      frag.killer.botSkill = event.killer.botSkill
-      frag.killer.health = event.killer.health
-      frag.killer.holdable = event.killer.holdable
-      frag.killer.position = {
-        x: event.killer.position.x,
-        y: event.killer.position.y,
-        z: event.killer.position.z
-      }
-      frag.killer.powerUps = event.killer.powerUps
-      frag.killer.speed = event.killer.speed
-      // event.killer.submerged
-      frag.killer.team = event.killer.team
-      frag.killer.view = {
-        x: event.killer.view.x,
-        y: event.killer.view.y,
-        z: event.killer.view.z
-      }
-      frag.killer.weapon = event.killer.weapon
-
-      frag.victim.airborne = event.victim.airborne
-      frag.victim.ammo = event.victim.ammo
-      frag.victim.armor = event.victim.armor
-      frag.victim.bot = event.victim.bot
-      frag.victim.botSkill = event.victim.botSkill
-      frag.victim.health = event.victim.health
-      frag.victim.holdable = event.victim.holdable
-      frag.victim.position = {
-        x: event.victim.position.x,
-        y: event.victim.position.y,
-        z: event.victim.position.z
-      }
-      frag.victim.powerUps = event.victim.powerUps
-      frag.victim.speed = event.victim.speed
-      // event.victim.submerged
-      frag.victim.team = event.victim.team
-      frag.victim.view = {
-        x: event.victim.view.x,
-        y: event.victim.view.y,
-        z: event.victim.view.z
-      }
-      frag.victim.weapon = event.victim.weapon
-
-      await this.createFrag(frag)
     }
     else if (event instanceof PlayerMedalEvent) {
       let match = await this.getMatch(event.matchGuid)
-      let player = await this.createOrGetPlayer(event.steamId, event.name)
 
-      let medal = new Medal
+      if (match) {
+        let player = await this.createOrGetPlayer(event.steamId, event.name)
 
-      medal.matchId = match.id
-      medal.playerId = player.id
-
-      medal.medal = event.medal
-
-      await this.createMedal(medal)
+        let medal = new Medal
+  
+        medal.matchId = match.id
+        medal.playerId = player.id
+  
+        medal.medal = event.medal
+  
+        await this.createMedal(medal)  
+      }
     }
     else if (event instanceof PlayerStatsEvent) {
 
@@ -232,39 +242,42 @@ export default abstract class ToQlModel {
     }
     else if (event instanceof RoundOverEvent) {
       let match = await this.getMatch(event.matchGuid)
-      let medals = await this.getMedalsWithMissingRound(event.matchGuid)
-      let frags = await this.getFragsWithMissingRound(event.matchGuid)
 
-      let round = new Round
-
-      round.matchId = match.id
-      round.frags = frags
-
-      round.round = event.round
-      round.teamWon = event.teamWon
-      round.time = event.time
-      // event.warmup
-
-      let roundId = await this.createRound(round)
-
-      for (let frag of frags) {
-        frag.roundId = roundId
-        await this.updateFrag(frag)
+      if (match) {
+        let medals = await this.getMedalsWithMissingRound(event.matchGuid)
+        let frags = await this.getFragsWithMissingRound(event.matchGuid)
+  
+        let round = new Round
+  
+        round.matchId = match.id
+        round.frags = frags
+  
+        round.round = event.round
+        round.teamWon = event.teamWon
+        round.time = event.time
+        // event.warmup
+  
+        let roundId = await this.createRound(round)
+  
+        for (let frag of frags) {
+          frag.roundId = roundId
+          await this.updateFrag(frag)
+        }
+  
+        for (let medal of medals) {
+          medal.roundId = roundId
+          await this.updateMedal(medal)
+        }
+  
+        // assign stats to round  
       }
-
-      for (let medal of medals) {
-        medal.roundId = roundId
-        await this.updateMedal(medal)
-      }
-
-      // assign stats to round
     }
   }
   
-  abstract getActiveServerVisit(serverId: number, steamId: string): Promise<ServerVisit>
+  abstract getActiveServerVisit(serverId: number, steamId: string): Promise<ServerVisit|null>
   abstract getFrags(matchGuid: string): Promise<Frag[]>
   abstract getFragsWithMissingRound(matchGuid: string): Promise<Frag[]>
-  abstract getMatch(matchGuid: string): Promise<Match>
+  abstract getMatch(matchGuid: string): Promise<Match|null>
   abstract getMedalsWithMissingRound(matchGuid: string): Promise<Medal[]>
   abstract getRound(matchGuid: string, roundNumber: number): Promise<Round | null>
   
@@ -282,6 +295,7 @@ export default abstract class ToQlModel {
   abstract updateFrag(frag: Frag): Promise<void>
   abstract updateMatch(match: Match): Promise<void>
   abstract updateMedal(medal: Medal): Promise<void>
+  abstract updateServerVisit(serverVisit: ServerVisit): Promise<void>
 }
 
 function utc(date: Date = new Date): Date {
