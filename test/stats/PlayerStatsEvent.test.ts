@@ -7,11 +7,13 @@ describe('stats/PlayerStatsEvent', function() {
      let ql = {
       "DATA" : {
          "ABORTED" : false,
+         "BLUE_FLAG_PICKUPS": 0,
          "DAMAGE" : {
             "DEALT" : 0,
             "TAKEN" : 0
          },
          "DEATHS" : 0,
+         "HOLY_SHITS": 0,
          "KILLS" : 0,
          "LOSE" : 0,
          "MATCH_GUID" : "1a8bd0a8-f819-4245-b873-4235ffa1607e",
@@ -36,6 +38,7 @@ describe('stats/PlayerStatsEvent', function() {
          },
          "MODEL" : "sarge",
          "NAME" : "garz",
+         "NEUTRAL_FLAG_PICKUPS": 0,
          "PICKUPS" : {
             "AMMO" : 0,
             "ARMOR" : 0,
@@ -67,7 +70,11 @@ describe('stats/PlayerStatsEvent', function() {
          "RANK" : -1,
          "SCORE" : 0,
          "STEAM_ID" : "76561198170654797",
+         "TEAM": 2,
+         "TEAM_JOIN_TIME": 0,
+         "TEAM_RANK": -1,
          "TIED_RANK" : 1,
+         "TIED_TEAM_RANK": 1,
          "WARMUP" : true,
          "WEAPONS" : {
             "BFG" : {
@@ -219,13 +226,15 @@ describe('stats/PlayerStatsEvent', function() {
     let event = PlayerStatsEvent.fromQl(ql['DATA'])
 
     expect(event.aborted).to.equal(ql['DATA']['ABORTED'])
+    expect(event.blueFlagPickups).to.equal(ql['DATA']['BLUE_FLAG_PICKUPS'])
 
     expect(event.damage.dealt).to.equal(ql['DATA']['DAMAGE']['DEALT'])
     expect(event.damage.taken).to.equal(ql['DATA']['DAMAGE']['TAKEN'])
 
     expect(event.deaths).to.equal(ql['DATA']['DEATHS'])
+    expect(event.holyShits).to.equal(ql['DATA']['HOLY_SHITS'])
     expect(event.kills).to.equal(ql['DATA']['KILLS'])
-    expect(event.lose).to.equal(ql['DATA']['LOSE'])
+    expect(event.lose).to.equal(false)
     expect(event.matchGuid).to.equal(ql['DATA']['MATCH_GUID'])
     expect(event.maxStreak).to.equal(ql['DATA']['MAX_STREAK'])
 
@@ -248,6 +257,7 @@ describe('stats/PlayerStatsEvent', function() {
 
     expect(event.model).to.equal(ql['DATA']['MODEL'])
     expect(event.name).to.equal(ql['DATA']['NAME'])
+    expect(event.neutralFlagPickups).to.equal(ql['DATA']['NEUTRAL_FLAG_PICKUPS'])
 
     expect(event.pickups.ammo).to.equal(ql['DATA']['PICKUPS']['AMMO'])
     expect(event.pickups.armor).to.equal(ql['DATA']['PICKUPS']['ARMOR'])
@@ -275,11 +285,16 @@ describe('stats/PlayerStatsEvent', function() {
     expect(event.pickups.yellowArmor).to.equal(ql['DATA']['PICKUPS']['YELLOW_ARMOR'])
 
     expect(event.playTime).to.equal(ql['DATA']['PLAY_TIME'])
-    expect(event.quit).to.equal(ql['DATA']['QUIT'])
+    expect(event.quit).to.equal(true)
     expect(event.rank).to.equal(ql['DATA']['RANK'])
     expect(event.score).to.equal(ql['DATA']['SCORE'])
     expect(event.steamId).to.equal(ql['DATA']['STEAM_ID'])
+    expect(event.team).to.equal(ql['DATA']['TEAM'])
+    expect(event.teamJoinTime).to.equal(ql['DATA']['TEAM_JOIN_TIME'])
+    expect(event.teamRank).to.equal(ql['DATA']['TEAM_RANK'])
+    expect(event.team).to.equal(ql['DATA']['TEAM'])
     expect(event.tiedRank).to.equal(ql['DATA']['TIED_RANK'])
+    expect(event.tiedTeamRank).to.equal(ql['DATA']['TIED_TEAM_RANK'])
     expect(event.warmup).to.equal(ql['DATA']['WARMUP'])
 
     expect(event.weapons.bfg.deaths).to.equal(ql['DATA']['WEAPONS']['BFG']['D'])
@@ -408,6 +423,6 @@ describe('stats/PlayerStatsEvent', function() {
     expect(event.weapons.shotgun.shots).to.equal(ql['DATA']['WEAPONS']['SHOTGUN']['S'])
     expect(event.weapons.shotgun.t).to.equal(ql['DATA']['WEAPONS']['SHOTGUN']['T'])
 
-    expect(event.win).to.equal(ql['DATA']['WIN'])
+    expect(event.win).to.equal(false)
   })
 })

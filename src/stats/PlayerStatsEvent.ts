@@ -1,21 +1,42 @@
 export default class PlayerStatsEvent {
 
   aborted: boolean // what is this?
+  blueFlagPickups: number
   deaths: number
+  holyShits: number
   kills: number
-  lose: number // what is this?
+  
+  /**
+   * Is true if the player lose and did not quit. Property 'win' and 'quit' will be false.
+   */
+  lose: boolean
   matchGuid: string
   maxStreak: number
   model: string
   name: string
+  neutralFlagPickups: number
   playTime: number
-  quit: number // maybe boolean? what is the difference to aborted?
+
+  /**
+   * Is true if the player did quit. Properties 'lose' and 'win' will be false.
+   */
+  quit: boolean
+  
   rank: number
+  redFlagPickups: number
   score: number
   steamId: string
-  tiedRank: number // what is this?
+  team: number
+  teamJoinTime: number
+  teamRank: number
+  tiedRank: number
+  tiedTeamRank: number // what is this?
   warmup: boolean
-  win: number // what is this?
+  
+  /**
+   * Is true if the player won and did not quit. Property 'lose' and 'quit' will be false.
+   */
+  win: boolean
 
   damage: {
     dealt: number
@@ -215,21 +236,29 @@ export default class PlayerStatsEvent {
     let event = new PlayerStatsEvent
  
     event.aborted = data['ABORTED']
-    event.model = data['MODEL']
-    event.name = data['NAME']
+    event.blueFlagPickups = data['BLUE_FLAG_PICKUPS'] ? data['BLUE_FLAG_PICKUPS'] : 0
     event.deaths = data['DEATHS']
+    event.holyShits = data['HOLY_SHITS'] ? data['HOLY_SHITS'] : 0
     event.kills = data['KILLS']
-    event.lose = data['LOSE']
+    event.lose = data['LOSE'] ? true : false
     event.matchGuid = data['MATCH_GUID']
     event.maxStreak = data['MAX_STREAK']
+    event.model = data['MODEL']
+    event.name = data['NAME']
+    event.neutralFlagPickups = data['NEUTRAL_FLAG_PICKUPS'] ? data['NEUTRAL_FLAG_PICKUPS'] : 0
     event.playTime = data['PLAY_TIME']
-    event.quit = data['QUIT']
+    event.quit = data['QUIT'] ? true : false
     event.rank = data['RANK']
+    event.redFlagPickups = data['RED_FLAG_PICKUPS'] ? data['RED_FLAG_PICKUPS'] : 0
     event.score = data['SCORE']
     event.steamId = data['STEAM_ID']
+    event.team = data['TEAM'] ? data['TEAM'] : 0
+    event.teamJoinTime = data['TEAM_JOIN_TIME'] != null ? data['TEAM_JOIN_TIME'] : -1
+    event.teamRank = data['TEAM_RANK'] ? data['TEAM_RANK'] : -1
     event.tiedRank = data['TIED_RANK']
+    event.tiedTeamRank = data['TIED_TEAM_RANK'] != null ? data['TIED_TEAM_RANK'] : -1
     event.warmup = data['WARMUP']
-    event.win = data['WIN']
+    event.win = data['WIN'] ? true : false
 
     event.damage = {
       dealt: data['DAMAGE']['DEALT'],

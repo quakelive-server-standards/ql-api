@@ -4,6 +4,10 @@ import GameType from './stats/types/GameType'
 
 export default abstract class ToQlModel {
 
+  async bootUp() {
+    // delete all entities which are incomplete
+  }
+
   async integrate(serverIp: string, serverPort: number, event: MatchReportEvent | MatchStartedEvent | PlayerConnectEvent | PlayerDeathEvent | PlayerDisconnectEvent | PlayerKillEvent | PlayerMedalEvent | PlayerStatsEvent | PlayerSwitchTeamEvent | RoundOverEvent) {
     let server = await this.createOrGetServer(serverIp, serverPort)
 
@@ -19,7 +23,7 @@ export default abstract class ToQlModel {
         match.serverId = server.id
         server.title = event.serverTitle
   
-        // event.aborted
+        match.aborted = event.aborted
         match.cvars.capturelimit = event.captureLimit
         match.exitMessage = event.exitMsg
         match.cvars.fraglimit = event.fragLimit
