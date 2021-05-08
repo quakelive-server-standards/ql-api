@@ -23,7 +23,7 @@
     "typescript": "^4.2.4"
   },
   "dependencies": {
-    "ql-model": "^0.2.10",
+    "ql-model": "^0.2.12",
     "zeromq-ts": "^0.1.0"
   }
 }

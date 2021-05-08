@@ -107,7 +107,7 @@ describe('stats/PlayerKillEvent', function() {
     expect(event.otherTeamDead).to.equal(ql['DATA']['OTHER_TEAM_DEAD'])
     expect(event.round).to.equal(ql['DATA']['ROUND'])
     expect(event.suicide).to.equal(ql['DATA']['SUICIDE'])
-    expect(event.teamkill).to.equal(ql['DATA']['TEAMKILL'])
+    expect(event.teamKill).to.equal(ql['DATA']['TEAMKILL'])
     expect(event.teamAlive).to.equal(ql['DATA']['TEAM_ALIVE'])
     expect(event.teamDead).to.equal(ql['DATA']['TEAM_DEAD'])
     expect(event.time).to.equal(ql['DATA']['TIME'])

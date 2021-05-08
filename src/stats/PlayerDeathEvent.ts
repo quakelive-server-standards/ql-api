@@ -6,7 +6,7 @@ import WeaponType from './types/WeaponType'
 export default class PlayerDeathEvent {
 
   matchGuid: string
-  mod: ModType // what doe that mean?
+  mod: ModType // what does that mean?
   otherTeamAlive: number | null
   otherTeamDead: number | null
   round: number | null

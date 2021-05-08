@@ -12,7 +12,7 @@ export default class PlayerKillEvent {
   otherTeamDead: number | null
   round: number | null
   suicide: boolean
-  teamkill: boolean
+  teamKill: boolean
   teamAlive: number | null
   teamDead: number | null
   warmup: boolean
@@ -81,7 +81,7 @@ export default class PlayerKillEvent {
     event.otherTeamDead = data['OTHER_TEAM_DEAD']
     event.round = data['ROUND']
     event.suicide = data['SUICIDE']
-    event.teamkill = data['TEAMKILL']
+    event.teamKill = data['TEAMKILL']
     event.teamAlive = data['TEAM_ALIVE']
     event.teamDead = data['TEAM_DEAD']
     event.time = data['TIME']
