@@ -129,6 +129,8 @@ export default abstract class ToQlModel {
           frag.teamAlive = event.teamAlive
           frag.teamDead = event.teamDead
           frag.time = event.time
+          frag.warmup = event.warmup
+
           frag.victim.airborne = event.victim.airborne
           frag.victim.ammo = event.victim.ammo
           frag.victim.armor = event.victim.armor
@@ -189,6 +191,7 @@ export default abstract class ToQlModel {
         frag.teamAlive = event.teamAlive
         frag.teamDead = event.teamDead
         frag.time = event.time
+        frag.warmup = warmup
   
         frag.killer.airborne = event.killer.airborne
         frag.killer.ammo = event.killer.ammo
@@ -252,6 +255,7 @@ export default abstract class ToQlModel {
         medal.serverId = server.id
   
         medal.medal = event.medal
+        medal.warmup = event.warmup
   
         await this.createMedal(medal)
       }
@@ -290,7 +294,7 @@ export default abstract class ToQlModel {
         stats.teamRank = event.teamRank
         stats.tiedRank = event.tiedRank
         stats.tiedTeamRank = event.tiedTeamRank
-        // event.warmup
+        stats.warmup = event.warmup
         // event.win
         stats.damageDealt = event.damage.dealt
         stats.damageTaken = event.damage.taken
