@@ -119,6 +119,7 @@ export default abstract class ToQlModel {
           frag.matchId = match ? match.id : null
           frag.victim = new FragParticipant
           frag.victim.playerId = victim.id
+          frag.serverId = server.id
   
           frag.reason = event.mod
           frag.otherTeamAlive = event.otherTeamAlive
@@ -179,6 +180,7 @@ export default abstract class ToQlModel {
         frag.matchId = match ? match.id : null
         frag.victim = new FragParticipant
         frag.victim.playerId = victim.id
+        frag.serverId = server.id
   
         frag.otherTeamAlive = event.otherTeamAlive
         frag.otherTeamDead = event.otherTeamDead
@@ -247,6 +249,7 @@ export default abstract class ToQlModel {
   
         medal.matchId = match.id
         medal.playerId = player.id
+        medal.serverId = server.id
   
         medal.medal = event.medal
   
@@ -528,7 +531,7 @@ export default abstract class ToQlModel {
         let round = new Round
   
         round.matchId = match.id
-        round.frags = frags
+        round.serverId = server.id
   
         round.round = event.round
         round.teamWon = event.teamWon
