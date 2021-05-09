@@ -7,7 +7,7 @@ export default class RoundOverEvent {
   round: number
   teamWon: TeamType
   time: number
-  warmup: boolean
+  warmup: boolean // how can there be a round in warmup mode?
     
   static fromQl(data: any): RoundOverEvent {
     let event = new RoundOverEvent

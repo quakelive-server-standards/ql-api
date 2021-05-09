@@ -34,7 +34,6 @@ export default class PlayerStatsEvent {
    * Is true if the player did quit. Properties 'lose' and 'win' will be false.
    */
   quit: boolean
-  
   rank: number
   redFlagPickups: number
   score: number
@@ -42,7 +41,7 @@ export default class PlayerStatsEvent {
   team: TeamType
   teamJoinTime: number
   teamRank: number
-  tiedRank: number
+  tiedRank: number // what is this?
   tiedTeamRank: number // what is this?
   warmup: boolean
   

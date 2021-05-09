@@ -1,4 +1,4 @@
-import { Cvars, Factory, Frag, FragParticipant, GameType, Map, Match, Medal, Player, Round, Server, ServerVisit, Stats } from 'ql-model'
+import { Cvars, Factory, Frag, FragParticipant, GameType, Map, Match, MatchParticipation, Medal, Player, Round, Server, ServerVisit, Stats, TeamType } from 'ql-model'
 import { MatchReportEvent, MatchStartedEvent, PlayerConnectEvent, PlayerDeathEvent, PlayerDisconnectEvent, PlayerKillEvent, PlayerMedalEvent, PlayerStatsEvent, PlayerSwitchTeamEvent, RoundOverEvent } from '.'
 
 export default abstract class ToQlModel {
@@ -32,7 +32,7 @@ export default abstract class ToQlModel {
         match.guid = event.matchGuid
         match.cvars.mercylimit = event.mercyLimit
         match.cvars.g_quadHog = event.quadHog
-        // event.restarted
+        match.restarted = event.restarted
         match.cvars.roundlimit = event.roundLimit
         match.cvars.scorelimit = event.scoreLimit
         match.cvars.timelimit = event.timeLimit
@@ -66,12 +66,21 @@ export default abstract class ToQlModel {
       match.cvars.timelimit = event.timeLimit
       match.cvars.g_training = event.training
 
+      let id = await this.createMatch(match)
+
+      let startDate = utc()
+
       for (let eventPlayer of event.players) {
         let player = await this.createOrGetPlayer(eventPlayer.steamId, eventPlayer.name)
+        
+        let matchParticipation = new MatchParticipation
+        matchParticipation.matchId = id
+        matchParticipation.playerId = player.id
+        matchParticipation.serverId = server.id
+        matchParticipation.startDate = startDate
+
+        await this.createMatchParticipation(matchParticipation)
       }
-
-      await this.createMatch(match)
-
     }
     else if (event instanceof PlayerConnectEvent) {
       let player = await this.createOrGetPlayer(event.steamId, event.name)
@@ -92,15 +101,16 @@ export default abstract class ToQlModel {
        * handled in the PlayerKillEvent section
        */
       if (event.killer == null) {
+        let warump = event.warmup
         let match = await this.getMatch(event.matchGuid)
 
-        if (match) {
+        if (match || warump) {
           let victim = await this.createOrGetPlayer(event.victim.steamId, event.victim.name)
 
           let frag = new Frag
   
           frag.killer = null
-          frag.matchId = match.id
+          frag.matchId = match ? match.id : null
           frag.victim = new FragParticipant
           frag.victim.playerId = victim.id
   
@@ -112,7 +122,6 @@ export default abstract class ToQlModel {
           frag.teamAlive = event.teamAlive
           frag.teamDead = event.teamDead
           frag.time = event.time
-          // event.warmup
           frag.victim.airborne = event.victim.airborne
           frag.victim.ammo = event.victim.ammo
           frag.victim.armor = event.victim.armor
@@ -149,9 +158,10 @@ export default abstract class ToQlModel {
       }
     }
     else if (event instanceof PlayerKillEvent) {
+      let warmup = event.warmup
       let match = await this.getMatch(event.matchGuid)
 
-      if (match) {
+      if (match || warmup) {
         let killer = await this.createOrGetPlayer(event.killer.steamId, event.killer.name)
         let victim = await this.createOrGetPlayer(event.victim.steamId, event.victim.name)
   
@@ -159,7 +169,7 @@ export default abstract class ToQlModel {
   
         frag.killer = new FragParticipant
         frag.killer.playerId = killer.id
-        frag.matchId = match.id
+        frag.matchId = match ? match.id : null
         frag.victim = new FragParticipant
         frag.victim.playerId = victim.id
   
@@ -170,7 +180,6 @@ export default abstract class ToQlModel {
         frag.teamAlive = event.teamAlive
         frag.teamDead = event.teamDead
         frag.time = event.time
-        // event.warmup
   
         frag.killer.airborne = event.killer.airborne
         frag.killer.ammo = event.killer.ammo
@@ -234,19 +243,23 @@ export default abstract class ToQlModel {
   
         medal.medal = event.medal
   
-        await this.createMedal(medal)  
+        await this.createMedal(medal)
       }
     }
     else if (event instanceof PlayerStatsEvent) {
+      let warmup = event.warmup
       let match = await this.getMatch(event.matchGuid)
+      let matchParticipation = await this.getActiveMatchParticipation(event.steamId, event.matchGuid)
 
-      if (match) {
+      if (match && matchParticipation || warmup) {
         let player = await this.createOrGetPlayer(event.steamId, event.name)
 
         let stats = new Stats
 
-        stats.matchId = match.id
+        stats.matchId = match ? match.id : null
+        stats.matchParticipationId = matchParticipation.id
         stats.playerId = player.id
+        stats.serverId = server.id
   
         stats.aborted = event.aborted
         stats.blueFlagPickups = event.blueFlagPickups
@@ -471,10 +484,28 @@ export default abstract class ToQlModel {
           shots: event.weapons.shotgun.shots,
           t: event.weapons.shotgun.t
         }
+
+        matchParticipation.finishDate = utc()
+        await this.updateMatchParticipation(matchParticipation)
+        await this.createStats(stats)
       }
     }
     else if (event instanceof PlayerSwitchTeamEvent) {
+      if (event.newTeam != TeamType.Spectator) {
+        let match = await this.getMatch(event.matchGuid)
 
+        if (match) {
+          let player = await this.createOrGetPlayer(event.steamId, event.name)
+
+          let matchParticipation = new MatchParticipation
+          matchParticipation.matchId = match.id
+          matchParticipation.playerId = player.id
+          matchParticipation.serverId = server.id
+          matchParticipation.startDate = utc()
+          
+          await this.createMatchParticipation(matchParticipation)
+        }
+      }
     }
     else if (event instanceof RoundOverEvent) {
       let match = await this.getMatch(event.matchGuid)
@@ -510,12 +541,13 @@ export default abstract class ToQlModel {
     }
   }
   
+  abstract getActiveMatchParticipation(steamId: string, matchGuid: string): Promise<MatchParticipation|null>
   abstract getActiveServerVisit(serverId: number, steamId: string): Promise<ServerVisit|null>
   abstract getFrags(matchGuid: string): Promise<Frag[]>
   abstract getFragsWithMissingRound(matchGuid: string): Promise<Frag[]>
   abstract getMatch(matchGuid: string): Promise<Match|null>
   abstract getMedalsWithMissingRound(matchGuid: string): Promise<Medal[]>
-  abstract getRound(matchGuid: string, roundNumber: number): Promise<Round | null>
+  abstract getRound(matchGuid: string, roundNumber: number): Promise<Round|null>
   
   abstract createOrGetFactory(factoryName: string, factoryTitle: string, gameType: GameType): Promise<Factory>
   abstract createOrGetMap(mapName: string): Promise<Map>
@@ -524,12 +556,15 @@ export default abstract class ToQlModel {
 
   abstract createFrag(frag: Frag): Promise<number>
   abstract createMatch(match: Match): Promise<number>
+  abstract createMatchParticipation(matchParticipation: MatchParticipation): Promise<number>
   abstract createMedal(medal: Medal): Promise<number>
   abstract createRound(round: Round): Promise<number>
   abstract createServerVisit(serverVisit: ServerVisit): Promise<number>
+  abstract createStats(stats: Stats): Promise<number>
 
   abstract updateFrag(frag: Frag): Promise<void>
   abstract updateMatch(match: Match): Promise<void>
+  abstract updateMatchParticipation(matchParticipation: MatchParticipation): Promise<void>
   abstract updateMedal(medal: Medal): Promise<void>
   abstract updateServerVisit(serverVisit: ServerVisit): Promise<void>
 }
