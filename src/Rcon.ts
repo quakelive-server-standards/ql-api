@@ -24,6 +24,9 @@ export default class Rcon extends ZeroMq {
 
   async getCvar(cvar: string): Promise<any> {
     this.send(cvar)
+    await new Promise((resolve, reject) => {
+      
+    })
   }
 
   setCvar(cvar: string, value: any) {

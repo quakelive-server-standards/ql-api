@@ -7,7 +7,7 @@ export default abstract class ToQlModel {
     // delete all entities which are incomplete
   }
 
-  async integrate(serverIp: string, serverPort: number, event: MatchReportEvent | MatchStartedEvent | PlayerConnectEvent | PlayerDeathEvent | PlayerDisconnectEvent | PlayerKillEvent | PlayerMedalEvent | PlayerStatsEvent | PlayerSwitchTeamEvent | RoundOverEvent) {
+  async integrate(serverIp: string, serverPort: number, event: MatchReportEvent | MatchStartedEvent | PlayerConnectEvent | PlayerDeathEvent | PlayerDisconnectEvent | PlayerKillEvent | PlayerMedalEvent | PlayerStatsEvent | PlayerSwitchTeamEvent | RoundOverEvent, now: Date = utc()) {
     let server = await this.createOrGetServer(serverIp, serverPort)
 
     if (event instanceof MatchReportEvent) {
@@ -16,7 +16,11 @@ export default abstract class ToQlModel {
       if (match) {
         let factory = await this.createOrGetFactory(event.factory, event.factoryTitle, event.gameType)
         let map = await this.createOrGetMap(event.map)
+
+        let finishDate = utc(match.startDate)
+        finishDate.setSeconds(finishDate.getSeconds() + event.gameLength)
   
+        match.finishDate = finishDate
         match.factoryId = factory.id
         match.mapId = map.id
         match.serverId = server.id
@@ -40,6 +44,7 @@ export default abstract class ToQlModel {
         match.score1 = event.teamScore0
         match.score2 = event.teamScore1
 
+        await this.updateServer(server)
         await this.updateMatch(match)
       }
     }
@@ -68,7 +73,7 @@ export default abstract class ToQlModel {
 
       let id = await this.createMatch(match)
 
-      let startDate = utc()
+      let startDate = now
 
       for (let eventPlayer of event.players) {
         let player = await this.createOrGetPlayer(eventPlayer.steamId, eventPlayer.name)
@@ -90,7 +95,7 @@ export default abstract class ToQlModel {
       serverVisit.playerId = player.id
       serverVisit.serverId = server.id
       
-      serverVisit.connectDate = utc()
+      serverVisit.connectDate = now
       // event.matchGuid
 
       await this.createServerVisit(serverVisit)
@@ -109,6 +114,7 @@ export default abstract class ToQlModel {
 
           let frag = new Frag
   
+          frag.date = now
           frag.killer = null
           frag.matchId = match ? match.id : null
           frag.victim = new FragParticipant
@@ -153,7 +159,7 @@ export default abstract class ToQlModel {
       let serverVisit = await this.getActiveServerVisit(server.id, event.steamId)
 
       if (serverVisit) {
-        serverVisit.disconnectDate = utc()
+        serverVisit.disconnectDate = now
         await this.updateServerVisit(serverVisit)
       }
     }
@@ -167,6 +173,7 @@ export default abstract class ToQlModel {
   
         let frag = new Frag
   
+        frag.date = now
         frag.killer = new FragParticipant
         frag.killer.playerId = killer.id
         frag.matchId = match ? match.id : null
@@ -485,7 +492,10 @@ export default abstract class ToQlModel {
           t: event.weapons.shotgun.t
         }
 
-        matchParticipation.finishDate = utc()
+        let finishDate = utc(matchParticipation.startDate)
+        finishDate.setSeconds(finishDate.getSeconds() + event.playTime)
+
+        matchParticipation.finishDate = finishDate
         await this.updateMatchParticipation(matchParticipation)
         await this.createStats(stats)
       }
@@ -501,7 +511,7 @@ export default abstract class ToQlModel {
           matchParticipation.matchId = match.id
           matchParticipation.playerId = player.id
           matchParticipation.serverId = server.id
-          matchParticipation.startDate = utc()
+          matchParticipation.startDate = now
           
           await this.createMatchParticipation(matchParticipation)
         }
@@ -513,6 +523,7 @@ export default abstract class ToQlModel {
       if (match) {
         let medals = await this.getMedalsWithMissingRound(event.matchGuid)
         let frags = await this.getFragsWithMissingRound(event.matchGuid)
+        let stats = await this.getStatsWithMissingRound(event.matchGuid)
   
         let round = new Round
   
@@ -536,7 +547,10 @@ export default abstract class ToQlModel {
           await this.updateMedal(medal)
         }
   
-        // assign stats to round  
+        for (let stat of stats) {
+          stat.roundId = roundId
+          await this.updateStats(stat)
+        }  
       }
     }
   }
@@ -548,6 +562,7 @@ export default abstract class ToQlModel {
   abstract getMatch(matchGuid: string): Promise<Match|null>
   abstract getMedalsWithMissingRound(matchGuid: string): Promise<Medal[]>
   abstract getRound(matchGuid: string, roundNumber: number): Promise<Round|null>
+  abstract getStatsWithMissingRound(matchGuid: string): Promise<Stats[]>
   
   abstract createOrGetFactory(factoryName: string, factoryTitle: string, gameType: GameType): Promise<Factory>
   abstract createOrGetMap(mapName: string): Promise<Map>
@@ -566,7 +581,9 @@ export default abstract class ToQlModel {
   abstract updateMatch(match: Match): Promise<void>
   abstract updateMatchParticipation(matchParticipation: MatchParticipation): Promise<void>
   abstract updateMedal(medal: Medal): Promise<void>
+  abstract updateServer(server: Server): Promise<void>
   abstract updateServerVisit(serverVisit: ServerVisit): Promise<void>
+  abstract updateStats(stats: Stats): Promise<void>
 }
 
 function utc(date: Date = new Date): Date {
