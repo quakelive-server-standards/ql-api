@@ -1,15 +1,6 @@
 import { EventEmitter } from 'events'
+import { MatchReportEvent, MatchStartedEvent, PlayerConnectEvent, PlayerDeathEvent, PlayerDisconnectEvent, PlayerKillEvent, PlayerMedalEvent, PlayerStatsEvent, PlayerSwitchTeamEvent, RoundOverEvent } from 'ql-stats-model'
 import { ProtocolType, SocketOptions, SocketType, ZeroMq } from 'zeromq-ts'
-import MatchReportEvent from './stats/MatchReportEvent'
-import MatchStartedEvent from './stats/MatchStartedEvent'
-import PlayerConnectEvent from './stats/PlayerConnectEvent'
-import PlayerDeathEvent from './stats/PlayerDeathEvent'
-import PlayerDisconnectEvent from './stats/PlayerDisconnectEvent'
-import PlayerKillEvent from './stats/PlayerKillEvent'
-import PlayerMedalEvent from './stats/PlayerMedalEvent'
-import PlayerStatsEvent from './stats/PlayerStatsEvent'
-import PlayerSwitchTeamEvent from './stats/PlayerSwitchTeamEvent'
-import RoundOverEvent from './stats/RoundOverEvent'
 
 export default class Stats extends ZeroMq {
 

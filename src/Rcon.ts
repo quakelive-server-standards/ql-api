@@ -10,12 +10,6 @@ export default class Rcon extends ZeroMq {
       plain_password: password ? password : undefined,
       zap_domain: password ? 'rcon' : undefined
     })
-
-    this.onMessage((message: Buffer) => {
-      let str = message.toString()
-
-      if ()
-    })
   }
 
   say(message: string) {
@@ -24,9 +18,6 @@ export default class Rcon extends ZeroMq {
 
   async getCvar(cvar: string): Promise<any> {
     this.send(cvar)
-    await new Promise((resolve, reject) => {
-      
-    })
   }
 
   setCvar(cvar: string, value: any) {
