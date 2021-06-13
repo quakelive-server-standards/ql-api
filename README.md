@@ -49,6 +49,12 @@ stats.onRoundOver((event: RoundOverEvent) => { ... })
 
 The raw JSON data is converted into instances of classes each of them dedicated to one event. A property which can have one of a set of predefined values is realized through an enum. Overall they form a complete documentation of the event data.
 
+If you still have the need to access the raw Quake Live event data, you can register an event handler with `onRawQlEvent`.
+
+```typescript
+stats.onRawQlEvent((event: any) => { ... })
+```
+
 ### ZMQ specifics
 
 The `connect()` method will return instantly and perform its actions in the background. To hook into specific steps you can register event listeners. Since these are based on the Node `EventEmitter` class, you can add as many listeners per event as you like.
