@@ -1,6 +1,6 @@
 {
   "name": "ql-api",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Quake Live dedicated server rcon and stats API clients",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

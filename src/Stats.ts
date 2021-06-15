@@ -33,8 +33,6 @@ export default class Stats extends ZeroMq {
       let type = obj.TYPE
       let data = obj.DATA
 
-      this.events.emit('RAW_QL_EVENT', json)
-
       switch (type) {
         case 'MATCH_REPORT': this.events.emit('MATCH_REPORT', MatchReportEvent.fromQl(data)); break
         case 'MATCH_STARTED': this.events.emit('MATCH_STARTED', MatchStartedEvent.fromQl(data)); break
@@ -49,6 +47,8 @@ export default class Stats extends ZeroMq {
         default:
           console.error(`Received Quake Live event type '${type}' does not exist or is not supported.`, data)
       }
+      
+      this.events.emit('RAW_QL_EVENT', json)
     })
   }
 
